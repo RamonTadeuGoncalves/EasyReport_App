@@ -1,10 +1,6 @@
-import 'dart:math';
-
+import 'package:easy_report_app/screens/service_list.dart';
+import 'package:easy_report_app/screens/service_report.dart';
 import 'package:flutter/material.dart';
-
-import 'components/transaction_form.dart';
-import 'components/transaction_list.dart';
-import 'models/transactions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/service': (context) => const ServiceList(),
+        '/report': (context) => const ServiceReport(),
+      },
       title: 'Easy Report',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
@@ -53,69 +54,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  final List<Transaction> _transactions = [];
-
-  List<Transaction> get _recentTransctions {
-    return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(
-        const Duration(days: 7),
-      ));
-    }).toList();
-  }
-
-  _addTransaction(String title, DateTime date) {
-    final newTransaction = Transaction(
-      id: Random().nextDouble().toString(),
-      title: title,
-      date: date,
-    );
-    setState(() {
-      _transactions.add(newTransaction);
-      Navigator.of(context).pop();
-    });
-  }
-
-  _removeTransaction(String id) {
-    setState(() {
-      _transactions.removeWhere((tr) => tr.id == id);
-    });
-  }
-
-  _openTransactionFormModal(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionFom(_addTransaction);
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TransactionList(_transactions, _removeTransaction),
-          ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          bottom: const TabBar(tabs: [
+            Tab(
+              icon: Icon(Icons.receipt_long_rounded),
+            ),
+            Tab(
+              icon: Icon(Icons.file_open_rounded),
+            ),
+            Tab(
+              icon: Icon(Icons.settings),
+            ),
+          ]),
         ),
+        body: TabBarView(children: [
+          Center(
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/report');
+              },
+              icon: const Icon(Icons.receipt_long_rounded),
+              label: const Text('Report'),
+            ),
+          ),
+          Center(
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/service');
+              },
+              icon: const Icon(Icons.receipt_long_rounded),
+              label: const Text('Service'),
+            ),
+          ),
+          const Icon(Icons.settings),
+        ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

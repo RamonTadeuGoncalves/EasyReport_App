@@ -1,26 +1,26 @@
+import 'package:easy_report_app/models/service_order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/transactions.dart';
 
-class TransactionList extends StatelessWidget {
-  final List<Transaction> transactions;
+class ServiceReportList extends StatelessWidget {
+  final List<ServiceOrder> reports;
   final void Function(String) onRemove;
 
-  const TransactionList(this.transactions, this.onRemove, {Key? key})
+  const ServiceReportList(this.reports, this.onRemove, {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 500,
-      child: transactions.isEmpty
+      child: reports.isEmpty
           ? Column(
               children: [
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'Nenhum Relatório Cadastrado!',
+                  'Nenhuma Ordem de Servico Recebida :(',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 const SizedBox(
@@ -36,9 +36,9 @@ class TransactionList extends StatelessWidget {
               ],
             )
           : ListView.builder(
-              itemCount: transactions.length,
+              itemCount: reports.length,
               itemBuilder: (ctx, item) {
-                final tr = transactions[item];
+                final tr = reports[item];
                 return Card(
                   elevation: 5,
                   margin: const EdgeInsets.symmetric(
@@ -61,17 +61,17 @@ class TransactionList extends StatelessWidget {
                       //   ),
                       // ),
                     ),
-                    title: Text(tr.title,
+                    title: Text(tr.osNumero.toString(),
                         style: Theme.of(context).textTheme.titleLarge),
                     subtitle: Text(
-                      DateFormat('d MMM y').format(tr.date),
+                      DateFormat('d MMM y').format(tr.osDataAbertura),
                     ),
                     trailing: IconButton(
                       icon: Icon(
                         Icons.delete,
                         color: Theme.of(context).errorColor,
                       ),
-                      onPressed: () => onRemove(tr.id),
+                      onPressed: () => onRemove(tr.osNumero.toString()),
                     ),
                   ),
                 );
