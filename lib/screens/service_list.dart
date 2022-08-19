@@ -1,5 +1,9 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:easy_report_app/models/service_order.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import 'serviceOrderPage.dart';
 
 class ServiceList extends StatefulWidget {
   const ServiceList({Key? key}) : super(key: key);
@@ -9,16 +13,13 @@ class ServiceList extends StatefulWidget {
 }
 
 class _ServiceListState extends State<ServiceList> {
-  final client = Dio(
-    BaseOptions(baseUrl: 'http://10.0.2.2:8000/api'),
-  );
+  Future<List<ServiceOrder>> serviceOrdersFuture = getServiceOrders();
 
-  List<dynamic> ordemDeServicos = [];
-
-  Future<void> getServiceOrder() async {
-    final response = await client.get('/ordem_servico');
-    ordemDeServicos = response.data;
-    setState(() {});
+  static Future<List<ServiceOrder>> getServiceOrders() async {
+    const url = 'http://10.0.2.2:8000/api/ordem_servico';
+    final response = await http.get(Uri.parse(url));
+    final body = json.decode(response.body);
+    return body.map<ServiceOrder>(ServiceOrder.fromJson).toList();
   }
 
   @override
@@ -28,27 +29,25 @@ class _ServiceListState extends State<ServiceList> {
         title: const Text('Service Order Screen'),
       ),
       body: Center(
-        child: ListView.builder(
-          itemCount: ordemDeServicos.length,
-          itemBuilder: (ctx, index) {
-            return Card(
-              elevation: 5,
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  radius: 30,
-                ),
-                title: Text(ordemDeServicos[index]['osNumero'].toString()),
-                subtitle: Text(ordemDeServicos[index]['osDataAbertura']),
-              ),
-            );
+        child: FutureBuilder<List<ServiceOrder>>(
+          future: serviceOrdersFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Erro ao carregar ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              final serviceOrders = snapshot.data!;
+              return buildServiceOrders(serviceOrders);
+            } else {
+              return const Text('Nenhuma Ordem de Servico recebida :(');
+            }
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          getServiceOrder();
+          getServiceOrders();
         },
         tooltip: 'Update',
         child: const Icon(Icons.update),
@@ -56,4 +55,34 @@ class _ServiceListState extends State<ServiceList> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
+
+  Widget buildServiceOrders(List<ServiceOrder> serviceOrders) =>
+      ListView.builder(
+        itemCount: serviceOrders.length,
+        itemBuilder: (context, index) {
+          final serviceOrder = serviceOrders[index];
+
+          return Card(
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 28,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
+              title:
+                  Text('Ordem de Servico: ${serviceOrder.osNumero.toString()}'),
+              subtitle: Text(serviceOrder.osDataAbertura),
+              trailing: const Icon(Icons.arrow_forward),
+              onTap: () {
+                // Navigator.pushNamed(context, '/report');
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ServiceOrderPage(serviceOrder: serviceOrder),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      );
 }

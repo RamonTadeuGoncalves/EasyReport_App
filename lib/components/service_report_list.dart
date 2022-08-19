@@ -63,9 +63,7 @@ class ServiceReportList extends StatelessWidget {
                     ),
                     title: Text(tr.osNumero.toString(),
                         style: Theme.of(context).textTheme.titleLarge),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(tr.osDataAbertura),
-                    ),
+                    subtitle: Text(tr.osDataAbertura),
                     trailing: IconButton(
                       icon: Icon(
                         Icons.delete,

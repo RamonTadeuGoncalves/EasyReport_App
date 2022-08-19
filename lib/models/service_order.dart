@@ -3,7 +3,7 @@ class ServiceOrder {
   final int osFuncRegistro;
   final int osClienteRegistro;
   final int osVeicRegistro;
-  final DateTime osDataAbertura;
+  final String osDataAbertura;
   final String osDescricao;
   final String osObservacao;
   final String osOutros;
@@ -20,4 +20,14 @@ class ServiceOrder {
     required this.osOutros,
     required this.osTipoServico,
   });
+  static ServiceOrder fromJson(json) => ServiceOrder(
+      osNumero: json['osNumero'],
+      osFuncRegistro: json['osFuncRegistro'],
+      osClienteRegistro: json['osClienteRegistro'],
+      osVeicRegistro: json['osVeicRegistro'],
+      osDataAbertura: json['osDataAbertura'],
+      osDescricao: json['osDescricao'],
+      osObservacao: json['osObservacao'],
+      osOutros: json['osOutros'],
+      osTipoServico: json['osTipoServico']);
 }
