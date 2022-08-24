@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:easy_report_app/models/service_order.dart';
+import 'package:easy_report_app/models/ordem_servico.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'serviceOrderPage.dart';
+import 'ordem_servico_page.dart';
 
 class ServiceList extends StatefulWidget {
   const ServiceList({Key? key}) : super(key: key);
@@ -26,7 +25,7 @@ class _ServiceListState extends State<ServiceList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service Order Screen'),
+        title: const Text('Ordem de Servico'),
       ),
       body: Center(
         child: FutureBuilder<List<ServiceOrder>>(
@@ -40,7 +39,7 @@ class _ServiceListState extends State<ServiceList> {
               final serviceOrders = snapshot.data!;
               return buildServiceOrders(serviceOrders);
             } else {
-              return const Text('Nenhuma Ordem de Servico recebida :(');
+              return const Text('Nenhuma Ordem de Servico Recebida :(');
             }
           },
         ),

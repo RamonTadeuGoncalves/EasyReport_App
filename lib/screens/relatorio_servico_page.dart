@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../components/transaction_form.dart';
-import '../components/transaction_list.dart';
-import '../models/transactions.dart';
+import '../components/relatorio_servico_form.dart';
+import '../components/relatorio_servico_lista.dart';
+import '../models/relatorio_servico.dart';
 
 class ServiceReport extends StatefulWidget {
   const ServiceReport({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _ServiceReportState extends State<ServiceReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service Report Screen'),
+        title: const Text('Relatorio de Servico'),
       ),
       body: Center(
         child: Column(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/service_order.dart';
+import '../models/ordem_servico.dart';
 
 class ServiceOrderPage extends StatelessWidget {
   final ServiceOrder serviceOrder;
@@ -10,7 +10,7 @@ class ServiceOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Service Order Screen'),
+          title: const Text('Detalhes Ordem de Servico'),
         ),
         body: Center(
           child: Column(

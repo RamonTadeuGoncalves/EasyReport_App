@@ -1,5 +1,5 @@
-import 'package:easy_report_app/screens/service_list.dart';
-import 'package:easy_report_app/screens/service_report.dart';
+import 'package:easy_report_app/screens/ordem_servico_lista.dart';
+import 'package:easy_report_app/screens/relatorio_servico_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
