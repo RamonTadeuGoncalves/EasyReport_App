@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
 class TransactionList extends StatelessWidget {
-  final List<Transaction> transactions;
+  final List<Relatorio> transactions;
   final void Function(String) onRemove;
 
   const TransactionList(this.transactions, this.onRemove, {Key? key})
@@ -61,17 +61,17 @@ class TransactionList extends StatelessWidget {
                       //   ),
                       // ),
                     ),
-                    title: Text(tr.title,
+                    title: Text(tr.relatorioDescricao,
                         style: Theme.of(context).textTheme.titleLarge),
                     subtitle: Text(
-                      DateFormat('d MMM y').format(tr.date),
+                      DateFormat('d MMM y').format(tr.relatorioData),
                     ),
                     trailing: IconButton(
                       icon: Icon(
                         Icons.delete,
                         color: Theme.of(context).errorColor,
                       ),
-                      onPressed: () => onRemove(tr.id),
+                      onPressed: () => onRemove(tr.relatorioComentarioCliente),
                     ),
                   ),
                 );

@@ -12,21 +12,47 @@ class ServiceReport extends StatefulWidget {
 }
 
 class _ServiceReportState extends State<ServiceReport> {
-  final List<Transaction> _transactions = [];
+  final List<Relatorio> _transactions = [];
 
-  List<Transaction> get _recentTransctions {
+  List<Relatorio> get _recentTransctions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(
+      return tr.relatorioData.isAfter(DateTime.now().subtract(
         const Duration(days: 7),
       ));
     }).toList();
   }
 
-  _addTransaction(String title, DateTime date) {
-    final newTransaction = Transaction(
-      id: Random().nextDouble().toString(),
-      title: title,
-      date: date,
+  _addTransaction(
+    int relatorioNumero,
+    int relatorioOsNumero,
+    int relatorioFuncRegistro,
+    int relatorioClienteRegistro,
+    String relatorioDescricao,
+    String relatorioContatoCliente,
+    String relatorioSetorClicente,
+    DateTime relatorioData,
+    bool relatorioEstado,
+    String relatorioObservacao,
+    String relatorioFoto,
+    String relatorioComentarioCliente,
+    String relatorioOutros,
+    String relatorioTipoServico,
+  ) {
+    final newTransaction = Relatorio(
+      relatorioNumero: Random().nextInt(100),
+      relatorioOsNumero: relatorioOsNumero,
+      relatorioFuncRegistro: relatorioFuncRegistro,
+      relatorioClienteRegistro: relatorioClienteRegistro,
+      relatorioDescricao: relatorioDescricao,
+      relatorioContatoCliente: relatorioContatoCliente,
+      relatorioSetorClicente: relatorioSetorClicente,
+      relatorioData: relatorioData,
+      relatorioEstado: relatorioEstado,
+      relatorioObservacao: relatorioObservacao,
+      relatorioFoto: relatorioFoto,
+      relatorioComentarioCliente: relatorioComentarioCliente,
+      relatorioOutros: relatorioOutros,
+      relatorioTipoServico: relatorioTipoServico,
     );
     setState(() {
       _transactions.add(newTransaction);
@@ -36,7 +62,7 @@ class _ServiceReportState extends State<ServiceReport> {
 
   _removeTransaction(String id) {
     setState(() {
-      _transactions.removeWhere((tr) => tr.id == id);
+      _transactions.removeWhere((tr) => tr.relatorioNumero == id);
     });
   }
 
