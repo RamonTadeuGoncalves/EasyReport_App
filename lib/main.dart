@@ -1,6 +1,8 @@
 import 'package:easy_report_app/screens/ordem_servico_lista.dart';
-import 'package:easy_report_app/screens/relatorio_servico_page.dart';
+import 'package:easy_report_app/screens/relatorio_servico_form.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/relatorio_servico_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/service': (context) => const ServiceList(),
         '/report': (context) => const ServiceReport(),
+        '/report_form': (context) => RelatorioServicoForm(),
       },
       title: 'Easy Report',
       theme: ThemeData(
@@ -54,47 +57,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _telas = [
+    ServiceReport(),
+    ServiceList(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          bottom: const TabBar(tabs: [
-            Tab(
-              icon: Icon(Icons.receipt_long_rounded),
-            ),
-            Tab(
-              icon: Icon(Icons.file_open_rounded),
-            ),
-            Tab(
-              icon: Icon(Icons.settings),
-            ),
-          ]),
-        ),
-        body: TabBarView(children: [
-          Center(
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/report');
-              },
-              icon: const Icon(Icons.receipt_long_rounded),
-              label: const Text('Report'),
-            ),
+          appBar: AppBar(
+            title: Text(widget.title),
           ),
-          Center(
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/service');
-              },
-              icon: const Icon(Icons.receipt_long_rounded),
-              label: const Text('Service'),
-            ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.receipt_long_rounded),
+                label: 'Relatorio',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.file_open_rounded),
+                label: 'O.S.',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Configuracao',
+              )
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.purple,
+            onTap: _onItemTapped,
           ),
-          const Icon(Icons.settings),
-        ]),
-      ),
+          body: _telas[_selectedIndex]),
     );
   }
 }

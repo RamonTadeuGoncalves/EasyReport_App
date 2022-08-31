@@ -77,20 +77,19 @@ class _ServiceReportState extends State<ServiceReport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Relatorio de Servico'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TransactionList(_transactions, _removeTransaction),
+            // _relatorioForm,
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context),
+        // onPressed: () => _openTransactionFormModal(context),
+        onPressed: () => Navigator.pushNamed(context, '/report_form'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

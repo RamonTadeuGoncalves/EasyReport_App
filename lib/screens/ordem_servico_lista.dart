@@ -24,9 +24,6 @@ class _ServiceListState extends State<ServiceList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ordem de Servico'),
-      ),
       body: Center(
         child: FutureBuilder<List<ServiceOrder>>(
           future: serviceOrdersFuture,
@@ -37,7 +34,34 @@ class _ServiceListState extends State<ServiceList> {
               return Text('Erro ao carregar ${snapshot.error}');
             } else if (snapshot.hasData) {
               final serviceOrders = snapshot.data!;
-              return buildServiceOrders(serviceOrders);
+              if (serviceOrders != null) {
+                return buildServiceOrders(serviceOrders);
+              } else {
+                return SizedBox(
+                  height: 500,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Nenhuma Ordem de Servico Recebida :(',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: Image.asset(
+                          'assets/images/waiting.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
             } else {
               return const Text('Nenhuma Ordem de Servico Recebida :(');
             }
