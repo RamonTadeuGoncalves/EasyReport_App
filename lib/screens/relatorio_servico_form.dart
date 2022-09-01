@@ -1,15 +1,34 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
 class RelatorioServicoForm extends StatefulWidget {
-  RelatorioServicoForm({Key? key}) : super(key: key);
+  final void Function(
+    int,
+    int,
+    int,
+    int,
+    String,
+    String,
+    String,
+    DateTime,
+    String,
+    String,
+    String,
+    String,
+  ) onSubmit;
+
+  RelatorioServicoForm(this.onSubmit, {Key? key}) : super(key: key);
 
   @override
   State<RelatorioServicoForm> createState() => _RelatorioServicoFormState();
 }
 
 class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
+  final List<Relatorio> _relatorios = [];
+
   final TextEditingController _relatorioNumeroController =
       TextEditingController();
 
@@ -54,11 +73,6 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
   DateTime _relatorioData = DateTime.now();
 
   _submitForm() {
-    // final title = _titleController.text;
-    // final value = double.tryParse(_valueController.text) ?? 0.0;
-
-    // if (title.isEmpty || _selectedDate == null) {
-    //   return;
     final relatorioNumero = int.tryParse(_relatorioNumeroController.text) ?? 0;
     final relatorioOsNumero =
         int.tryParse(_relatorioOsNumeroController.text) ?? 0;
@@ -69,7 +83,6 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
     final relatorioDescricao = _relatorioDescricaoController.text;
     final relatorioContatoCliente = _relatorioContatoClienteController.text;
     final relatorioSetorClicente = _relatorioSetorClicenteController.text;
-    // final relatorioData = _relatorioData;
     // final relatorioEstado =
     // bool.fromEnvironment(_relatorioEstadoController.text);
     final relatorioObservacao = _relatorioObservacaoController.text;
@@ -79,39 +92,37 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
     final relatorioOutros = _relatorioOutrosController.text;
     final relatorioTipoServico = _relatorioTipoServicoController.text;
 
-    // widWget.onSubmit(
-    //   relatorioNumero,
-    //   relatorioOsNumero,
-    //   relatorioFuncRegistro,
-    //   relatorioClienteRegistro,
-    //   relatorioDescricao,
-    //   relatorioContatoCliente,
-    //   relatorioSetorClicente,
-    //   _relatorioData,
-    //   relatorioEstado,
-    //   relatorioObservacao,
-    //   relatorioFoto,
-    //   relatorioComentarioCliente,
-    //   relatorioOutros,
-    //   relatorioTipoServico,
-    // );
+    widget.onSubmit(
+      relatorioNumero,
+      relatorioOsNumero,
+      relatorioFuncRegistro,
+      relatorioClienteRegistro,
+      relatorioDescricao,
+      relatorioContatoCliente,
+      relatorioSetorClicente,
+      _relatorioData,
+      relatorioObservacao,
+      relatorioComentarioCliente,
+      relatorioOutros,
+      relatorioTipoServico,
+    );
 
-    final Relatorio novoRelatorio = Relatorio(
-        relatorioNumero: relatorioNumero,
-        relatorioOsNumero: relatorioOsNumero,
-        relatorioFuncRegistro: relatorioFuncRegistro,
-        relatorioClienteRegistro: relatorioClienteRegistro,
-        relatorioDescricao: relatorioDescricao,
-        relatorioContatoCliente: relatorioContatoCliente,
-        relatorioSetorClicente: relatorioSetorClicente,
-        relatorioData: _relatorioData,
-        // relatorioEstado: relatorioEstado,
-        relatorioObservacao: relatorioObservacao,
-        // relatorioFoto: relatorioFoto,
-        relatorioComentarioCliente: relatorioComentarioCliente,
-        relatorioOutros: relatorioOutros,
-        relatorioTipoServico: relatorioTipoServico);
-    print(novoRelatorio);
+    // final Relatorio novoRelatorio = Relatorio(
+    //     relatorioNumero: relatorioNumero,
+    //     relatorioOsNumero: relatorioOsNumero,
+    //     relatorioFuncRegistro: relatorioFuncRegistro,
+    //     relatorioClienteRegistro: relatorioClienteRegistro,
+    //     relatorioDescricao: relatorioDescricao,
+    //     relatorioContatoCliente: relatorioContatoCliente,
+    //     relatorioSetorClicente: relatorioSetorClicente,
+    //     relatorioData: _relatorioData,
+    //     // relatorioEstado: relatorioEstado,
+    //     relatorioObservacao: relatorioObservacao,
+    //     // relatorioFoto: relatorioFoto,
+    //     relatorioComentarioCliente: relatorioComentarioCliente,
+    //     relatorioOutros: relatorioOutros,
+    //     relatorioTipoServico: relatorioTipoServico);
+    // print(novoRelatorio);
   }
 
   _showDatePicker() {

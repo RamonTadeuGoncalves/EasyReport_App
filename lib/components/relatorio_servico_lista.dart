@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
 class TransactionList extends StatelessWidget {
@@ -62,9 +63,9 @@ class TransactionList extends StatelessWidget {
                       ),
                       title: Text(tr.relatorioDescricao,
                           style: Theme.of(context).textTheme.titleLarge),
-                      subtitle: Text('Data'
-                          // DateFormat('d MMM y').format(tr.relatorioData),
-                          ),
+                      subtitle: Text(
+                        DateFormat('d MMM y').format(tr.relatorioData),
+                      ),
                       trailing: IconButton(
                         icon: Icon(
                           Icons.delete,
