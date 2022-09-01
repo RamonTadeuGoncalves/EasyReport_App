@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import '../models/relatorio_servico.dart';
 
 class RelatorioServicoForm extends StatelessWidget {
   RelatorioServicoForm({Key? key}) : super(key: key);
@@ -53,11 +52,11 @@ class RelatorioServicoForm extends StatelessWidget {
     final relatorioDescricao = _relatorioDescricaoController.text;
     final relatorioContatoCliente = _relatorioContatoClienteController.text;
     final relatorioSetorClicente = _relatorioSetorClicenteController.text;
-    // final relatorioData = TextEditingController();
-    final relatorioEstado =
-        bool.fromEnvironment(_relatorioEstadoController.text);
+    // final relatorioData = _relatorioData;
+    // final relatorioEstado =
+    // bool.fromEnvironment(_relatorioEstadoController.text);
     final relatorioObservacao = _relatorioObservacaoController.text;
-    final relatorioFoto = _relatorioFotoController.text;
+    // final relatorioFoto = _relatorioFotoController.text;
     final relatorioComentarioCliente =
         _relatorioComentarioClienteController.text;
     final relatorioOutros = _relatorioOutrosController.text;
@@ -79,31 +78,29 @@ class RelatorioServicoForm extends StatelessWidget {
     //   relatorioOutros,
     //   relatorioTipoServico,
     // );
+
+    final Relatorio novoRelatorio = Relatorio(
+        relatorioNumero: relatorioNumero,
+        relatorioOsNumero: relatorioOsNumero,
+        relatorioFuncRegistro: relatorioFuncRegistro,
+        relatorioClienteRegistro: relatorioClienteRegistro,
+        relatorioDescricao: relatorioDescricao,
+        relatorioContatoCliente: relatorioContatoCliente,
+        relatorioSetorClicente: relatorioSetorClicente,
+        // relatorioData: relatorioData,
+        // relatorioEstado: relatorioEstado,
+        relatorioObservacao: relatorioObservacao,
+        // relatorioFoto: relatorioFoto,
+        relatorioComentarioCliente: relatorioComentarioCliente,
+        relatorioOutros: relatorioOutros,
+        relatorioTipoServico: relatorioTipoServico);
+    print(novoRelatorio);
   }
 
   @override
-  Widget build(BuildContext context) {
-    _showDatePicker() {
-      showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2019),
-        lastDate: DateTime.now(),
-      ).then((pickedDate) {
-        if (pickedDate == null) {
-          return;
-        }
-        _relatorioData = pickedDate;
-        // setState(() {
-        //   _relatorioData = pickedDate;
-        // });
-      });
-    }
-
-    return MaterialApp(
-      home: Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Cadastrar Relatorio'),
+          title: const Text('Cadastrar Relatorio'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -135,18 +132,18 @@ class RelatorioServicoForm extends StatelessWidget {
               controller: _relatorioSetorClicenteController,
               decoration: const InputDecoration(labelText: 'Setor'),
             ),
-            TextField(
-              controller: _relatorioEstadoController,
-              decoration: const InputDecoration(labelText: 'Estado'),
-            ),
+            // TextField(
+            //   controller: _relatorioEstadoController,
+            //   decoration: const InputDecoration(labelText: 'Estado'),
+            // ),
             TextField(
               controller: _relatorioObservacaoController,
               decoration: const InputDecoration(labelText: 'Observacao'),
             ),
-            TextField(
-              controller: _relatorioFotoController,
-              decoration: const InputDecoration(labelText: 'Foto'),
-            ),
+            // TextField(
+            //   controller: _relatorioFotoController,
+            //   decoration: const InputDecoration(labelText: 'Foto'),
+            // ),
             TextField(
               controller: _relatorioComentarioClienteController,
               decoration: const InputDecoration(labelText: 'Comentario'),
@@ -170,17 +167,17 @@ class RelatorioServicoForm extends StatelessWidget {
                           : 'Data selecionada: ${DateFormat('dd/MM/y').format(_relatorioData)}',
                     ),
                   ),
-                  TextButton(
-                    child: const Text(
-                      'Selecionar data',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      _showDatePicker();
-                    },
-                  ),
+                  // TextButton(
+                  //   child: const Text(
+                  //     'Selecionar data',
+                  //     style: TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  //   onPressed: () {
+                  //     _showDatePicker();
+                  //   },
+                  // ),
                 ],
               ),
             ),
@@ -197,7 +194,5 @@ class RelatorioServicoForm extends StatelessWidget {
             )
           ]),
         ),
-      ),
-    );
-  }
+      );
 }

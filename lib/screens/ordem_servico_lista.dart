@@ -34,9 +34,7 @@ class _ServiceListState extends State<ServiceList> {
               return Text('Erro ao carregar ${snapshot.error}');
             } else if (snapshot.hasData) {
               final serviceOrders = snapshot.data!;
-              if (serviceOrders != null) {
-                return buildServiceOrders(serviceOrders);
-              } else {
+              if (serviceOrders.length == 0) {
                 return SizedBox(
                   height: 500,
                   child: Column(
@@ -61,6 +59,8 @@ class _ServiceListState extends State<ServiceList> {
                     ],
                   ),
                 );
+              } else {
+                return buildServiceOrders(serviceOrders);
               }
             } else {
               return const Text('Nenhuma Ordem de Servico Recebida :(');
@@ -70,7 +70,11 @@ class _ServiceListState extends State<ServiceList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          getServiceOrders();
+          getServiceOrders().then((value) {
+            setState(() {
+              widget.createState();
+            });
+          });
         },
         tooltip: 'Update',
         child: const Icon(Icons.update),
@@ -84,7 +88,6 @@ class _ServiceListState extends State<ServiceList> {
         itemCount: serviceOrders.length,
         itemBuilder: (context, index) {
           final serviceOrder = serviceOrders[index];
-
           return Card(
             child: ListTile(
               leading: CircleAvatar(

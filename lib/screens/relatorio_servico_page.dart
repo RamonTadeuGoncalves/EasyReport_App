@@ -14,13 +14,13 @@ class ServiceReport extends StatefulWidget {
 class _ServiceReportState extends State<ServiceReport> {
   final List<Relatorio> _transactions = [];
 
-  List<Relatorio> get _recentTransctions {
-    return _transactions.where((tr) {
-      return tr.relatorioData.isAfter(DateTime.now().subtract(
-        const Duration(days: 7),
-      ));
-    }).toList();
-  }
+  // List<Relatorio> get _recentTransctions {
+  //   return _transactions.where((tr) {
+  //     return tr.relatorioData.isAfter(DateTime.now().subtract(
+  //       const Duration(days: 7),
+  //     ));
+  //   }).toList();
+  // }
 
   _addTransaction(
     int relatorioNumero,
@@ -46,10 +46,10 @@ class _ServiceReportState extends State<ServiceReport> {
       relatorioDescricao: relatorioDescricao,
       relatorioContatoCliente: relatorioContatoCliente,
       relatorioSetorClicente: relatorioSetorClicente,
-      relatorioData: relatorioData,
-      relatorioEstado: relatorioEstado,
+      // relatorioData: relatorioData,
+      // relatorioEstado: relatorioEstado,
       relatorioObservacao: relatorioObservacao,
-      relatorioFoto: relatorioFoto,
+      // relatorioFoto: relatorioFoto,
       relatorioComentarioCliente: relatorioComentarioCliente,
       relatorioOutros: relatorioOutros,
       relatorioTipoServico: relatorioTipoServico,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
 class TransactionList extends StatelessWidget {
@@ -40,41 +39,42 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (ctx, item) {
                 final tr = transactions[item];
                 return Card(
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      radius: 30,
-                      // child: Padding(
-                      //   padding: const EdgeInsets.all(5.0),
-                      //   child: FittedBox(
-                      //     child: Text(
-                      //       'R\$${tr.value}',
-                      //       style: const TextStyle(
-                      //         color: Color.fromARGB(255, 241, 247, 250),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 5,
                     ),
-                    title: Text(tr.relatorioDescricao,
-                        style: Theme.of(context).textTheme.titleLarge),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(tr.relatorioData),
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).errorColor,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        radius: 30,
+                        // child: Padding(
+                        //   padding: const EdgeInsets.all(5.0),
+                        //   child: FittedBox(
+                        //     child: Text(
+                        //       'R\$${tr.value}',
+                        //       style: const TextStyle(
+                        //         color: Color.fromARGB(255, 241, 247, 250),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ),
-                      onPressed: () => onRemove(tr.relatorioComentarioCliente),
-                    ),
-                  ),
-                );
+                      title: Text(tr.relatorioDescricao,
+                          style: Theme.of(context).textTheme.titleLarge),
+                      subtitle: Text('Data'
+                          // DateFormat('d MMM y').format(tr.relatorioData),
+                          ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).errorColor,
+                        ),
+                        onPressed: () => onRemove(
+                          tr.relatorioDescricao,
+                        ),
+                      ),
+                    ));
               },
             ),
     );
