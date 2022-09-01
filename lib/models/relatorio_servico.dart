@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Relatorio {
   final int relatorioNumero;
   final int relatorioOsNumero;
@@ -6,7 +8,7 @@ class Relatorio {
   final String relatorioDescricao;
   final String relatorioContatoCliente;
   final String relatorioSetorClicente;
-  // final DateTime relatorioData;
+  final DateTime relatorioData;
   // final bool relatorioEstado;
   final String relatorioObservacao;
   // final String relatorioFoto;
@@ -22,7 +24,7 @@ class Relatorio {
     required this.relatorioDescricao,
     required this.relatorioContatoCliente,
     required this.relatorioSetorClicente,
-    // required this.relatorioData,
+    required this.relatorioData,
     // required this.relatorioEstado,
     required this.relatorioObservacao,
     // required this.relatorioFoto,
@@ -31,11 +33,7 @@ class Relatorio {
     required this.relatorioTipoServico,
   });
 
-  // String toString() {
-  //   return 'Relatorio{Numero: $relatorioOsNumero, $relatorioFuncRegistro, $relatorioClienteRegistro, $relatorioDescricao, $relatorioContatoCliente, $relatorioSetorClicente, $relatorioData, $relatorioEstado, $relatorioObservacao, $relatorioFoto, $relatorioComentarioCliente, $relatorioOutros,    $relatorioTipoServico}';
-  // }
-
   String toString() {
-    return 'Relatorio {Numero Relatorio: $relatorioNumero, Numero O.S. $relatorioOsNumero, Funcionario: $relatorioFuncRegistro, Descricao: $relatorioDescricao, CLiente: $relatorioClienteRegistro, Contado: $relatorioContatoCliente, Setor: $relatorioSetorClicente';
+    return 'Relatorio {Numero Relatorio: $relatorioNumero, Numero O.S. $relatorioOsNumero, Funcionario: $relatorioFuncRegistro, Descricao: $relatorioDescricao, CLiente: $relatorioClienteRegistro, Contado: $relatorioContatoCliente, Setor: $relatorioSetorClicente, Data: ${DateFormat('dd/MM/y').format(relatorioData)}, Obs.: $relatorioObservacao, Comentario Cliente: $relatorioComentarioCliente, Outros: $relatorioOutros, Tipo de Servico: $relatorioTipoServico';
   }
 }

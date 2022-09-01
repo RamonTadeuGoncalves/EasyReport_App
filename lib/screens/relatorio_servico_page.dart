@@ -46,7 +46,7 @@ class _ServiceReportState extends State<ServiceReport> {
       relatorioDescricao: relatorioDescricao,
       relatorioContatoCliente: relatorioContatoCliente,
       relatorioSetorClicente: relatorioSetorClicente,
-      // relatorioData: relatorioData,
+      relatorioData: relatorioData,
       // relatorioEstado: relatorioEstado,
       relatorioObservacao: relatorioObservacao,
       // relatorioFoto: relatorioFoto,

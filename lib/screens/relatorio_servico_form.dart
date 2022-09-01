@@ -2,39 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
-class RelatorioServicoForm extends StatelessWidget {
+class RelatorioServicoForm extends StatefulWidget {
   RelatorioServicoForm({Key? key}) : super(key: key);
 
+  @override
+  State<RelatorioServicoForm> createState() => _RelatorioServicoFormState();
+}
+
+class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
   final TextEditingController _relatorioNumeroController =
       TextEditingController();
+
   final TextEditingController _relatorioOsNumeroController =
       TextEditingController();
+
   final TextEditingController _relatorioFuncRegistroController =
       TextEditingController();
+
   final TextEditingController _relatorioClienteRegistroController =
       TextEditingController();
+
   final TextEditingController _relatorioDescricaoController =
       TextEditingController();
+
   final TextEditingController _relatorioContatoClienteController =
       TextEditingController();
+
   final TextEditingController _relatorioSetorClicenteController =
       TextEditingController();
+
   final TextEditingController relatorioData = TextEditingController();
+
   final TextEditingController _relatorioEstadoController =
       TextEditingController();
+
   final TextEditingController _relatorioObservacaoController =
       TextEditingController();
+
   final TextEditingController _relatorioFotoController =
       TextEditingController();
+
   final TextEditingController _relatorioComentarioClienteController =
       TextEditingController();
+
   final TextEditingController _relatorioOutrosController =
       TextEditingController();
+
   final TextEditingController _relatorioTipoServicoController =
       TextEditingController();
-  DateTime _relatorioData = DateTime.now();
 
-  // get widWget => null;
+  DateTime _relatorioData = DateTime.now();
 
   _submitForm() {
     // final title = _titleController.text;
@@ -87,7 +104,7 @@ class RelatorioServicoForm extends StatelessWidget {
         relatorioDescricao: relatorioDescricao,
         relatorioContatoCliente: relatorioContatoCliente,
         relatorioSetorClicente: relatorioSetorClicente,
-        // relatorioData: relatorioData,
+        relatorioData: _relatorioData,
         // relatorioEstado: relatorioEstado,
         relatorioObservacao: relatorioObservacao,
         // relatorioFoto: relatorioFoto,
@@ -95,6 +112,22 @@ class RelatorioServicoForm extends StatelessWidget {
         relatorioOutros: relatorioOutros,
         relatorioTipoServico: relatorioTipoServico);
     print(novoRelatorio);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _relatorioData = pickedDate;
+      });
+    });
   }
 
   @override
@@ -132,18 +165,10 @@ class RelatorioServicoForm extends StatelessWidget {
               controller: _relatorioSetorClicenteController,
               decoration: const InputDecoration(labelText: 'Setor'),
             ),
-            // TextField(
-            //   controller: _relatorioEstadoController,
-            //   decoration: const InputDecoration(labelText: 'Estado'),
-            // ),
             TextField(
               controller: _relatorioObservacaoController,
               decoration: const InputDecoration(labelText: 'Observacao'),
             ),
-            // TextField(
-            //   controller: _relatorioFotoController,
-            //   decoration: const InputDecoration(labelText: 'Foto'),
-            // ),
             TextField(
               controller: _relatorioComentarioClienteController,
               decoration: const InputDecoration(labelText: 'Comentario'),
@@ -167,17 +192,17 @@ class RelatorioServicoForm extends StatelessWidget {
                           : 'Data selecionada: ${DateFormat('dd/MM/y').format(_relatorioData)}',
                     ),
                   ),
-                  // TextButton(
-                  //   child: const Text(
-                  //     'Selecionar data',
-                  //     style: TextStyle(
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  //   onPressed: () {
-                  //     _showDatePicker();
-                  //   },
-                  // ),
+                  TextButton(
+                    child: const Text(
+                      'Selecionar data',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      _showDatePicker();
+                    },
+                  ),
                 ],
               ),
             ),
