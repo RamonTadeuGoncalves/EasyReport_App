@@ -1,28 +1,32 @@
+import 'package:easy_report_app/models/relatorio_servico.dart';
+import 'package:easy_report_app/screens/relatorio_servico_form.dart';
+import 'package:easy_report_app/screens/relatorio_servico_page.dart';
 import 'dart:convert';
-import 'package:easy_report_app/models/ordem_servico.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'ordem_servico_page.dart';
 
-class ServiceList extends StatefulWidget {
-  const ServiceList({Key? key}) : super(key: key);
+class RelatorioDeServicoLista extends StatefulWidget {
+  const RelatorioDeServicoLista({Key? key}) : super(key: key);
 
   @override
-  State<ServiceList> createState() => _ServiceListState();
+  State<RelatorioDeServicoLista> createState() =>
+      _RelatorioDeServicoListaState();
 }
 
-class _ServiceListState extends State<ServiceList> {
-  Future<List<ServiceOrder>> serviceOrdersFuture = getServiceOrders();
+class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
+  final List<Relatorio> _relatorios = [];
+  Future<List<Relatorio>> relatorioDeServicoFuture = getRelatoriosDeServico();
 
-  static Future<List<ServiceOrder>> getServiceOrders() async {
-    const url = 'http://10.0.2.2:8000/api/ordem_servico';
+  static Future<List<Relatorio>> getRelatoriosDeServico() async {
+    const url = 'http://10.0.2.2:8000/api/relatorio_servico';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
-      List<ServiceOrder> serviceOrders =
-          body.map((dynamic item) => ServiceOrder.fromJson(item)).toList();
-      return serviceOrders;
+      List<Relatorio> relatorios =
+          body.map((dynamic item) => Relatorio.fromJson(item)).toList();
+      return relatorios;
+      // return body.map<Relatorio>(Relatorio.fromJson).toList();
     } else {
       throw 'Falha ao carregar';
     }
@@ -32,16 +36,16 @@ class _ServiceListState extends State<ServiceList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder<List<ServiceOrder>>(
-          future: serviceOrdersFuture,
+        child: FutureBuilder<List<Relatorio>>(
+          future: relatorioDeServicoFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Erro ao carregar ${snapshot.error}');
             } else if (snapshot.hasData) {
-              final serviceOrders = snapshot.data!;
-              if (serviceOrders.isEmpty) {
+              final relatoriosDeServico = snapshot.data!;
+              if (relatoriosDeServico.isEmpty) {
                 return SizedBox(
                   height: 500,
                   child: Column(
@@ -50,7 +54,7 @@ class _ServiceListState extends State<ServiceList> {
                         height: 20,
                       ),
                       Text(
-                        'Nenhuma Ordem de Servico Recebida :(',
+                        'Nenhum Relatorio Cadastrado :(',
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       const SizedBox(
@@ -67,7 +71,7 @@ class _ServiceListState extends State<ServiceList> {
                   ),
                 );
               } else {
-                return buildServiceOrders(serviceOrders);
+                return buildRelatoriosDeServico(relatoriosDeServico);
               }
             } else {
               return const Text('Nenhuma Ordem de Servico Recebida :(');
@@ -76,42 +80,40 @@ class _ServiceListState extends State<ServiceList> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          getServiceOrders().then((value) {
-            setState(() {
-              widget.createState();
-            });
-          });
-        },
-        tooltip: 'Update',
-        child: const Icon(Icons.update),
-      ),
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const RelatorioServicoForm(),
+              ),
+            );
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-  Widget buildServiceOrders(List<ServiceOrder> serviceOrders) =>
+  Widget buildRelatoriosDeServico(List<Relatorio> relatoriosDeServico) =>
       ListView.builder(
-        itemCount: serviceOrders.length,
+        itemCount: relatoriosDeServico.length,
         itemBuilder: (context, index) {
-          final serviceOrder = serviceOrders[index];
+          final relatorioDeServico = relatoriosDeServico[index];
           return Card(
             child: ListTile(
               leading: CircleAvatar(
                 radius: 28,
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
-              title:
-                  Text('Ordem de Servico: ${serviceOrder.osNumero.toString()}'),
-              subtitle: Text(
-                  DateFormat('dd/MM/y').format(serviceOrder.osDataAbertura)),
+              title: Text(
+                  'Relatorio De Servico: ${relatorioDeServico.relatorioNumero.toString()}'),
+              subtitle: Text(DateFormat('dd/MM/y')
+                  .format(relatorioDeServico.relatorioData)),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () {
                 // Navigator.pushNamed(context, '/report');
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        ServiceOrderPage(serviceOrder: serviceOrder),
+                        ServiceReport(relatorioDeServico: relatorioDeServico),
                   ),
                 );
               },

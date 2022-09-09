@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:easy_report_app/screens/ordem_servico_lista.dart';
-import 'package:easy_report_app/screens/relatorio_servico_form.dart';
+import 'package:easy_report_app/screens/relatorio_servico_lista.dart';
 import 'package:flutter/material.dart';
 import 'models/relatorio_servico.dart';
-import 'screens/relatorio_servico_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/service': (context) => const ServiceList(),
-        '/report': (context) => const ServiceReport(),
+        '/report': (context) => const RelatorioDeServicoLista(),
         // '/report_form': (context) => RelatorioServicoForm(_addRelatorio),
       },
       title: 'Easy Report',
@@ -64,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _telas = [
-    ServiceReport(),
+    RelatorioDeServicoLista(),
     ServiceList(),
   ];
 

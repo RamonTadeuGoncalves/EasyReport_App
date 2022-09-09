@@ -1,33 +1,80 @@
-import 'dart:math';
-
+import 'dart:convert';
+import 'dart:io';
+import 'package:easy_report_app/screens/relatorio_servico_lista.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/relatorio_servico.dart';
 
 class RelatorioServicoForm extends StatefulWidget {
-  final void Function(
-    int,
-    int,
-    int,
-    int,
-    String,
-    String,
-    String,
-    DateTime,
-    String,
-    String,
-    String,
-    String,
-  ) onSubmit;
+  // final void Function(
+  //   int,
+  //   int,
+  //   int,
+  //   int,
+  //   String,
+  //   String,
+  //   String,
+  //   DateTime,
+  //   String,
+  //   String,
+  //   String,
+  //   String,
+  // ) onSubmit;
 
-  RelatorioServicoForm(this.onSubmit, {Key? key}) : super(key: key);
+  const RelatorioServicoForm({Key? key}) : super(key: key);
 
   @override
   State<RelatorioServicoForm> createState() => _RelatorioServicoFormState();
 }
 
+Future<Relatorio> addRelatorio(
+  int relatorioNumero,
+  int relatorioOsNumero,
+  int relatorioFuncRegistro,
+  int relatorioClienteRegistro,
+  String relatorioDescricao,
+  String relatorioContatoCliente,
+  String relatorioSetorClicente,
+  DateTime relatorioData,
+  String relatorioObservacao,
+  String relatorioComentarioCliente,
+  String relatorioOutros,
+  String relatorioTipoServico,
+) async {
+  const String apiUrl = 'http://10.0.2.2:8000/api/relatorio_servico/';
+
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    body: jsonEncode({
+      'relatorioNumero': relatorioNumero,
+      'relatorioOsNumero': relatorioOsNumero,
+      'relatorioFuncRegistro': relatorioFuncRegistro,
+      'relatorioClienteRegistro': relatorioClienteRegistro,
+      'relatorioDescricao': relatorioDescricao,
+      'relatorioContatoCliente': relatorioContatoCliente,
+      'relatorioSetorClicente': relatorioSetorClicente,
+      'relatorioData': relatorioData.toIso8601String(),
+      'relatorioObservacao': relatorioObservacao,
+      'relatorioComentarioCliente': relatorioComentarioCliente,
+      'relatorioOutros': relatorioOutros,
+      'relatorioTipoServico': relatorioTipoServico
+    }),
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    },
+  );
+
+  if (response.statusCode == 201) {
+    final String responseString = response.body;
+    return relatorioFromJson(responseString);
+  } else {
+    throw Exception('Falha...');
+  }
+}
+
 class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
-  final List<Relatorio> _relatorios = [];
+  Future<Relatorio>? _relatorio;
 
   final TextEditingController _relatorioNumeroController =
       TextEditingController();
@@ -52,14 +99,14 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
 
   final TextEditingController relatorioData = TextEditingController();
 
-  final TextEditingController _relatorioEstadoController =
-      TextEditingController();
+  // final TextEditingController _relatorioEstadoController =
+  //     TextEditingController();
 
   final TextEditingController _relatorioObservacaoController =
       TextEditingController();
 
-  final TextEditingController _relatorioFotoController =
-      TextEditingController();
+  // final TextEditingController _relatorioFotoController =
+  //     TextEditingController();
 
   final TextEditingController _relatorioComentarioClienteController =
       TextEditingController();
@@ -92,37 +139,37 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
     final relatorioOutros = _relatorioOutrosController.text;
     final relatorioTipoServico = _relatorioTipoServicoController.text;
 
-    widget.onSubmit(
-      relatorioNumero,
-      relatorioOsNumero,
-      relatorioFuncRegistro,
-      relatorioClienteRegistro,
-      relatorioDescricao,
-      relatorioContatoCliente,
-      relatorioSetorClicente,
-      _relatorioData,
-      relatorioObservacao,
-      relatorioComentarioCliente,
-      relatorioOutros,
-      relatorioTipoServico,
-    );
+    setState(() {
+      _relatorio = addRelatorio(
+          relatorioNumero,
+          relatorioOsNumero,
+          relatorioFuncRegistro,
+          relatorioClienteRegistro,
+          relatorioDescricao,
+          relatorioContatoCliente,
+          relatorioSetorClicente,
+          _relatorioData,
+          relatorioObservacao,
+          relatorioComentarioCliente,
+          relatorioOutros,
+          relatorioTipoServico);
+      Navigator.of(context).pop();
+    });
 
-    // final Relatorio novoRelatorio = Relatorio(
-    //     relatorioNumero: relatorioNumero,
-    //     relatorioOsNumero: relatorioOsNumero,
-    //     relatorioFuncRegistro: relatorioFuncRegistro,
-    //     relatorioClienteRegistro: relatorioClienteRegistro,
-    //     relatorioDescricao: relatorioDescricao,
-    //     relatorioContatoCliente: relatorioContatoCliente,
-    //     relatorioSetorClicente: relatorioSetorClicente,
-    //     relatorioData: _relatorioData,
-    //     // relatorioEstado: relatorioEstado,
-    //     relatorioObservacao: relatorioObservacao,
-    //     // relatorioFoto: relatorioFoto,
-    //     relatorioComentarioCliente: relatorioComentarioCliente,
-    //     relatorioOutros: relatorioOutros,
-    //     relatorioTipoServico: relatorioTipoServico);
-    // print(novoRelatorio);
+    // widget.onSubmit(
+    //   relatorioNumero,
+    //   relatorioOsNumero,
+    //   relatorioFuncRegistro,
+    //   relatorioClienteRegistro,
+    //   relatorioDescricao,
+    //   relatorioContatoCliente,
+    //   relatorioSetorClicente,
+    //   _relatorioData,
+    //   relatorioObservacao,
+    //   relatorioComentarioCliente,
+    //   relatorioOutros,
+    //   relatorioTipoServico,
+    // );
   }
 
   _showDatePicker() {
