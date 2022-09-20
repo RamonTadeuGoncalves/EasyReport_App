@@ -1,9 +1,14 @@
+import 'package:easy_report_app/screens/login_page.dart';
 import 'package:easy_report_app/screens/ordem_servico_lista.dart';
+import 'package:easy_report_app/screens/relatorio_servico_form.dart';
 import 'package:easy_report_app/screens/relatorio_servico_lista.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'models/relatorio_servico.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
@@ -16,9 +21,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/service': (context) => const ServiceList(),
-        '/report': (context) => const RelatorioDeServicoLista(),
-        // '/report_form': (context) => RelatorioServicoForm(_addRelatorio),
+        '/service': (_) => const ServiceList(),
+        '/report': (_) => const RelatorioServicoForm(),
+        '/login': (_) => const LoginPage(),
       },
       title: 'Easy Report',
       theme: ThemeData(
@@ -56,6 +61,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    await Future.delayed(const Duration(seconds: 1));
+    print('go!');
+    FlutterNativeSplash.remove();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+
   final List<Relatorio> _relatorios = [];
 
   int _selectedIndex = 0;
@@ -63,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _telas = [
     RelatorioDeServicoLista(),
     ServiceList(),
+    LoginPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -73,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // return Text('data');
     return DefaultTabController(
       length: 3,
       child: Scaffold(

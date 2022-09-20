@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:easy_report_app/screens/relatorio_servico_lista.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -69,7 +68,7 @@ Future<Relatorio> addRelatorio(
     final String responseString = response.body;
     return relatorioFromJson(responseString);
   } else {
-    throw Exception('Falha...');
+    throw Exception(response);
   }
 }
 
@@ -154,22 +153,8 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
           relatorioOutros,
           relatorioTipoServico);
       Navigator.of(context).pop();
+      // Navigator.pushReplacementNamed(context, '/');
     });
-
-    // widget.onSubmit(
-    //   relatorioNumero,
-    //   relatorioOsNumero,
-    //   relatorioFuncRegistro,
-    //   relatorioClienteRegistro,
-    //   relatorioDescricao,
-    //   relatorioContatoCliente,
-    //   relatorioSetorClicente,
-    //   _relatorioData,
-    //   relatorioObservacao,
-    //   relatorioComentarioCliente,
-    //   relatorioOutros,
-    //   relatorioTipoServico,
-    // );
   }
 
   _showDatePicker() {
@@ -195,10 +180,10 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            TextField(
-              controller: _relatorioNumeroController,
-              decoration: const InputDecoration(labelText: 'Relatorio Numero'),
-            ),
+            // TextField(
+            //   controller: _relatorioNumeroController,
+            //   decoration: const InputDecoration(labelText: 'Relatorio Numero'),
+            // ),
             TextField(
               controller: _relatorioOsNumeroController,
               decoration: const InputDecoration(labelText: 'Ordem de Servico'),
