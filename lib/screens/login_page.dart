@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:easy_report_app/data/api_data.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import '../models/usuarios.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,45 +10,12 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-Future<Usuarios> addUsuario(
-  String password,
-  String username,
-) async {
-  const String apiUrl = 'http://10.0.2.2:8000/api/usuario/';
-
-  final response = await http.post(
-    Uri.parse(apiUrl),
-    body: jsonEncode({
-      'password': password,
-      'username': username,
-    }),
-    headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-    },
-  );
-
-  // print(username);
-  // print(password);
-
-  if (response.statusCode == 201) {
-    // print(username);
-    // print(password);
-    final String responseString = response.body;
-    return usuarioFromJson(responseString);
-  }
-  if (response.statusCode == 200) {
-    print('Usuario e/ou Senha invalidos');
-    final String responseString = response.body;
-    return usuarioFromJson(responseString);
-  } else {
-    throw Exception('Falha...');
-  }
-}
-
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   Future<Usuarios>? _usuario;
+
+  final ApiData api = ApiData();
 
   final TextEditingController _usuarioPasswordController =
       TextEditingController();
@@ -57,23 +23,29 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usuarioUsernameController =
       TextEditingController();
 
-  _submitForm() {
-    final usuarioUsername = _usuarioUsernameController.text;
-    final usuarioPassword = _usuarioPasswordController.text;
-    final usuarioPasswordBytes = utf8.encode(usuarioPassword);
-    final usuarioPasswordBase64 = base64Encode(usuarioPasswordBytes);
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      final usuarioUsername = _usuarioUsernameController.text;
+      final usuarioPassword = _usuarioPasswordController.text;
+      final usuarioPasswordBytes = utf8.encode(usuarioPassword);
+      final usuarioPasswordBase64 = base64Encode(usuarioPasswordBytes);
 
-    setState(() {
-      if (_formKey.currentState!.validate()) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Processando informacao...')));
-        _usuario = addUsuario(
-          usuarioPasswordBase64,
-          usuarioUsername,
-        );
-        Navigator.pop(context);
-      }
-    });
+      dynamic _usuario = await api.loginUser(
+        usuarioPasswordBase64,
+        usuarioUsername,
+      );
+
+      setState(() {
+        print(_usuario);
+        if (_usuario != 'userError') {
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Usuario e/ou senha invalidos...')));
+          body(context);
+        }
+      });
+    }
   }
 
   @override
@@ -125,7 +97,8 @@ class _LoginPageState extends State<LoginPage> {
       height: 40,
       margin: const EdgeInsets.only(top: 10),
       child: ElevatedButton(
-        onPressed: _submitForm,
+        // onPressed: _submitForm,
+        onPressed: _login,
         child: const Text('Entrar'),
       ),
     );
