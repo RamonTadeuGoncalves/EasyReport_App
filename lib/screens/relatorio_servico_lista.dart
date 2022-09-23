@@ -1,8 +1,7 @@
+import 'package:easy_report_app/data/api_data.dart';
 import 'package:easy_report_app/models/relatorio_servico.dart';
 import 'package:easy_report_app/screens/relatorio_servico_form.dart';
 import 'package:easy_report_app/screens/relatorio_servico_page.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,21 +15,9 @@ class RelatorioDeServicoLista extends StatefulWidget {
 
 class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
   final List<Relatorio> _relatorios = [];
-  Future<List<Relatorio>> relatorioDeServicoFuture = getRelatoriosDeServico();
 
-  static Future<List<Relatorio>> getRelatoriosDeServico() async {
-    const url = 'http://10.0.2.2:8000/api/relatorio_servico';
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
-      List<Relatorio> relatorios =
-          body.map((dynamic item) => Relatorio.fromJson(item)).toList();
-      return relatorios;
-      // return body.map<Relatorio>(Relatorio.fromJson).toList();
-    } else {
-      throw 'Falha ao carregar';
-    }
-  }
+  Future<List<Relatorio>> relatorioDeServicoFuture =
+      ApiDataRelatorioServico.getRelatoriosDeServico();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +69,6 @@ class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            // Navigator.pushReplacementNamed(context, '/report');
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const RelatorioServicoForm(),
@@ -110,7 +96,6 @@ class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
                   .format(relatorioDeServico.relatorioData)),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () {
-                // Navigator.pushNamed(context, '/report');
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>

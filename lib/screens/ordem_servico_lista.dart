@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:easy_report_app/models/ordem_servico.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import '../data/api_data.dart';
 import 'ordem_servico_page.dart';
 
 class ServiceList extends StatefulWidget {
@@ -13,20 +12,8 @@ class ServiceList extends StatefulWidget {
 }
 
 class _ServiceListState extends State<ServiceList> {
-  Future<List<ServiceOrder>> serviceOrdersFuture = getServiceOrders();
-
-  static Future<List<ServiceOrder>> getServiceOrders() async {
-    const url = 'http://10.0.2.2:8000/api/ordem_servico';
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
-      List<ServiceOrder> serviceOrders =
-          body.map((dynamic item) => ServiceOrder.fromJson(item)).toList();
-      return serviceOrders;
-    } else {
-      throw 'Falha ao carregar';
-    }
-  }
+  Future<List<ServiceOrder>> serviceOrdersFuture =
+      ApiDataOrdemServico.getServiceOrders();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +64,7 @@ class _ServiceListState extends State<ServiceList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          getServiceOrders().then((value) {
+          ApiDataOrdemServico.getServiceOrders().then((value) {
             setState(() {
               widget.createState();
             });

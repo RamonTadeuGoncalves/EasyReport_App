@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<Usuarios>? _usuario;
 
-  final ApiData api = ApiData();
+  final ApiDataLogin api = ApiDataLogin();
 
   final TextEditingController _usuarioPasswordController =
       TextEditingController();
