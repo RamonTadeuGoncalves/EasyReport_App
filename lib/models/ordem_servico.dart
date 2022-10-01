@@ -14,7 +14,7 @@ class ServiceOrder {
   final String osDescricao;
   final String osObservacao;
   final String osOutros;
-  final String osTipoServico;
+  final int osTipoServico;
 
   ServiceOrder({
     required this.osNumero,
@@ -47,7 +47,7 @@ class ServiceOrder {
       osDescricao: json['osDescricao'] as String,
       osObservacao: json['osObservacao'] as String,
       osOutros: json['osOutros'] as String,
-      osTipoServico: json['osTipoServico'] as String);
+      osTipoServico: json['osTipoServico'] as int);
 
   Map<String, dynamic> toJson() => {
         'osNumero': osNumero,

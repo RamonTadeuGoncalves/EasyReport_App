@@ -63,7 +63,7 @@ class ApiDataRelatorioServico {
     String relatorioObservacao,
     String relatorioComentarioCliente,
     String relatorioOutros,
-    String relatorioTipoServico,
+    int relatorioTipoServico,
   ) async {
     const String apiUrl = 'http://10.0.2.2:8000/api/relatorio_servico/';
 

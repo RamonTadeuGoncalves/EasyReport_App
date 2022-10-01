@@ -18,7 +18,7 @@ class Relatorio {
   // String relatorioFoto;
   final String relatorioComentarioCliente;
   final String relatorioOutros;
-  final String relatorioTipoServico;
+  final int relatorioTipoServico;
 
   Relatorio({
     required this.relatorioNumero,
@@ -49,7 +49,7 @@ class Relatorio {
       relatorioObservacao: json['relatorioObservacao'] as String,
       relatorioComentarioCliente: json['relatorioComentarioCliente'] as String,
       relatorioOutros: json['relatorioOutros'] as String,
-      relatorioTipoServico: json['relatorioTipoServico'] as String);
+      relatorioTipoServico: json['relatorioTipoServico'] as int);
 
   Map<String, dynamic> toJson() => {
         'relatorioNumero': relatorioNumero,

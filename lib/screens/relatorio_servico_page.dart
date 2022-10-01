@@ -16,6 +16,7 @@ class ServiceReport extends StatelessWidget {
           child: Column(
             children: [
               Text(relatorioDeServico.relatorioDescricao),
+              Text((relatorioDeServico.relatorioOsNumero).toString()),
             ],
           ),
         ),
