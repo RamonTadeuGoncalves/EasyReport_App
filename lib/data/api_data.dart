@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:easy_report_app/models/funcionario.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import '../models/ordem_servico.dart';
@@ -106,6 +107,23 @@ class ApiDataOrdemServico {
       List<ServiceOrder> serviceOrders =
           body.map((dynamic item) => ServiceOrder.fromJson(item)).toList();
       return serviceOrders;
+    } else {
+      throw 'Falha ao carregar';
+    }
+  }
+}
+
+class ApiDataFuncionario {
+  static Future<List<Funcionarios>> getFuncionarios(String email) async {
+    String mainUrl = 'http://10.0.2.2:8000/api/funcionario/';
+    String funcEmail = email;
+    final String url = '$mainUrl$funcEmail';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      List<dynamic> body = json.decode(response.body);
+      List<Funcionarios> funcionarios =
+          body.map((dynamic item) => Funcionarios.fromJson(item)).toList();
+      return funcionarios;
     } else {
       throw 'Falha ao carregar';
     }

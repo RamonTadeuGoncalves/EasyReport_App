@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
 ServiceOrder relatorioFromJson(String str) =>
     ServiceOrder.fromJson(json.decode(str));
@@ -27,16 +26,6 @@ class ServiceOrder {
     required this.osOutros,
     required this.osTipoServico,
   });
-  // static ServiceOrder fromJson(json) => ServiceOrder(
-  //     osNumero: json['osNumero'],
-  //     osFuncRegistro: json['osFuncRegistro'],
-  //     osClienteRegistro: json['osClienteRegistro'],
-  //     osVeicRegistro: json['osVeicRegistro'],
-  //     osDataAbertura: json['osDataAbertura'],
-  //     osDescricao: json['osDescricao'],
-  //     osObservacao: json['osObservacao'],
-  //     osOutros: json['osOutros'],
-  //     osTipoServico: json['osTipoServico']);
 
   factory ServiceOrder.fromJson(Map<String, dynamic> json) => ServiceOrder(
       osNumero: json['osNumero'] as int,

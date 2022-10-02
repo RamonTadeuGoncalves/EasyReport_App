@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:easy_report_app/data/api_data.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/usuarios.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,8 +36,12 @@ class _LoginPageState extends State<LoginPage> {
         usuarioUsername,
       );
 
+      if (_usuario != 'userError') {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', usuarioUsername);
+      }
+
       setState(() {
-        print(_usuario);
         if (_usuario != 'userError') {
           Navigator.pop(context);
         } else {

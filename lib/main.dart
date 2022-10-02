@@ -1,3 +1,4 @@
+import 'package:easy_report_app/screens/funcionario_page.dart';
 import 'package:easy_report_app/screens/login_page.dart';
 import 'package:easy_report_app/screens/ordem_servico_lista.dart';
 import 'package:easy_report_app/screens/relatorio_servico_form.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/service': (_) => const ServiceList(),
         '/report': (_) => const RelatorioServicoForm(),
-        '/login': (_) => const LoginPage(),
+        '/func_info': (_) => const FuncionarioInfo(),
       },
       title: 'Easy Report',
       theme: ThemeData(
@@ -69,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void initialization() async {
     await Future.delayed(const Duration(seconds: 1));
-    print('go!');
     FlutterNativeSplash.remove();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _telas = [
     RelatorioDeServicoLista(),
     ServiceList(),
-    LoginPage(),
+    FuncionarioInfo(),
   ];
 
   void _onItemTapped(int index) {
