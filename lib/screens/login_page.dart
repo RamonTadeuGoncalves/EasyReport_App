@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (_usuario != 'userError') {
         SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove('email');
         prefs.setString('email', usuarioUsername);
       }
 

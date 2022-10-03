@@ -5,6 +5,7 @@ import 'package:easy_report_app/screens/relatorio_servico_form.dart';
 import 'package:easy_report_app/screens/relatorio_servico_lista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/relatorio_servico.dart';
 
 void main() {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/service': (_) => const ServiceList(),
         '/report': (_) => const RelatorioServicoForm(),
         '/func_info': (_) => const FuncionarioInfo(),
+        '/login': (_) => const LoginPage(),
       },
       title: 'Easy Report',
       theme: ThemeData(
@@ -91,6 +93,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  logoutUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    CircularProgressIndicator;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Text('data');
@@ -99,6 +109,15 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(widget.title),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.exit_to_app),
+                tooltip: 'Sair',
+                onPressed: () {
+                  logoutUser();
+                },
+              )
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const [

@@ -104,13 +104,7 @@ class _FuncionarioInfoState extends State<FuncionarioInfo> {
               subtitle:
                   Text('Sobrenome: ${funcionario.funcSobrenome.toString()}'),
               trailing: const Icon(Icons.arrow_forward),
-              onTap: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.clear();
-                CircularProgressIndicator;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
+              onTap: () {},
             ),
           );
         },
