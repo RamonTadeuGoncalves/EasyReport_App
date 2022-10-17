@@ -11,8 +11,6 @@ class ServiceOrder {
   final int osVeicRegistro;
   final DateTime osDataAbertura;
   final String osDescricao;
-  final String osObservacao;
-  final String osOutros;
   final int osTipoServico;
 
   ServiceOrder({
@@ -22,8 +20,6 @@ class ServiceOrder {
     required this.osVeicRegistro,
     required this.osDataAbertura,
     required this.osDescricao,
-    required this.osObservacao,
-    required this.osOutros,
     required this.osTipoServico,
   });
 
@@ -34,8 +30,6 @@ class ServiceOrder {
       osVeicRegistro: json['osVeicRegistro'] as int,
       osDataAbertura: DateTime.parse(json['osDataAbertura']),
       osDescricao: json['osDescricao'] as String,
-      osObservacao: json['osObservacao'] as String,
-      osOutros: json['osOutros'] as String,
       osTipoServico: json['osTipoServico'] as int);
 
   Map<String, dynamic> toJson() => {
@@ -45,8 +39,6 @@ class ServiceOrder {
         'osVeicRegistro': osVeicRegistro,
         'osDataAbertura': osDataAbertura.toIso8601String(),
         'osDescricao': osDescricao,
-        'osObservacao': osObservacao,
-        'osOutros': osOutros,
         'osTipoServico': osTipoServico
       };
 }

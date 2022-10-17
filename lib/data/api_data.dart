@@ -61,9 +61,6 @@ class ApiDataRelatorioServico {
     String relatorioContatoCliente,
     String relatorioSetorClicente,
     DateTime relatorioData,
-    String relatorioObservacao,
-    String relatorioComentarioCliente,
-    String relatorioOutros,
     int relatorioTipoServico,
   ) async {
     const String apiUrl = 'http://10.0.2.2:8000/api/relatorio_servico/';
@@ -79,9 +76,6 @@ class ApiDataRelatorioServico {
         'relatorioContatoCliente': relatorioContatoCliente,
         'relatorioSetorClicente': relatorioSetorClicente,
         'relatorioData': relatorioData.toIso8601String(),
-        'relatorioObservacao': relatorioObservacao,
-        'relatorioComentarioCliente': relatorioComentarioCliente,
-        'relatorioOutros': relatorioOutros,
         'relatorioTipoServico': relatorioTipoServico
       }),
       headers: {

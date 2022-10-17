@@ -13,11 +13,10 @@ class Relatorio {
   final String relatorioContatoCliente;
   final String relatorioSetorClicente;
   final DateTime relatorioData;
-  // bool relatorioEstado;
-  final String relatorioObservacao;
+  // final String relatorioObservacao;
   // String relatorioFoto;
-  final String relatorioComentarioCliente;
-  final String relatorioOutros;
+  // final String relatorioComentarioCliente;
+  // final String relatorioOutros;
   final int relatorioTipoServico;
 
   Relatorio({
@@ -29,11 +28,10 @@ class Relatorio {
     required this.relatorioContatoCliente,
     required this.relatorioSetorClicente,
     required this.relatorioData,
-    // required this.relatorioEstado,
-    required this.relatorioObservacao,
+    // required this.relatorioObservacao,
     // required this.relatorioFoto,
-    required this.relatorioComentarioCliente,
-    required this.relatorioOutros,
+    // required this.relatorioComentarioCliente,
+    // required this.relatorioOutros,
     required this.relatorioTipoServico,
   });
 
@@ -46,9 +44,9 @@ class Relatorio {
       relatorioContatoCliente: json['relatorioContatoCliente'] as String,
       relatorioSetorClicente: json['relatorioSetorClicente'] as String,
       relatorioData: DateTime.parse(json['relatorioData']),
-      relatorioObservacao: json['relatorioObservacao'] as String,
-      relatorioComentarioCliente: json['relatorioComentarioCliente'] as String,
-      relatorioOutros: json['relatorioOutros'] as String,
+      // relatorioObservacao: json['relatorioObservacao'] as String,
+      // relatorioComentarioCliente: json['relatorioComentarioCliente'] as String,
+      // relatorioOutros: json['relatorioOutros'] as String,
       relatorioTipoServico: json['relatorioTipoServico'] as int);
 
   Map<String, dynamic> toJson() => {
@@ -60,14 +58,14 @@ class Relatorio {
         'relatorioContatoCliente': relatorioContatoCliente,
         'relatorioSetorClicente': relatorioSetorClicente,
         'relatorioData': relatorioData.toIso8601String(),
-        'relatorioObservacao': relatorioObservacao,
-        'relatorioComentarioCliente': relatorioComentarioCliente,
-        'relatorioOutros': relatorioOutros,
+        // 'relatorioObservacao': relatorioObservacao,
+        // 'relatorioComentarioCliente': relatorioComentarioCliente,
+        // 'relatorioOutros': relatorioOutros,
         'relatorioTipoServico': relatorioTipoServico
       };
 
   @override
   String toString() {
-    return 'Relatorio {Numero Relatorio: $relatorioNumero, Numero O.S. $relatorioOsNumero, Funcionario: $relatorioFuncRegistro, Descricao: $relatorioDescricao, CLiente: $relatorioClienteRegistro, Contado: $relatorioContatoCliente, Setor: $relatorioSetorClicente, Data: ${DateFormat('dd/MM/y').format(relatorioData)}, Obs.: $relatorioObservacao, Comentario Cliente: $relatorioComentarioCliente, Outros: $relatorioOutros, Tipo de Servico: $relatorioTipoServico';
+    return 'Relatorio {Numero Relatorio: $relatorioNumero, Numero O.S. $relatorioOsNumero, Funcionario: $relatorioFuncRegistro, Descricao: $relatorioDescricao, CLiente: $relatorioClienteRegistro, Contado: $relatorioContatoCliente, Setor: $relatorioSetorClicente, Data: ${DateFormat('dd/MM/y').format(relatorioData)}, Tipo de Servico: $relatorioTipoServico';
   }
 }

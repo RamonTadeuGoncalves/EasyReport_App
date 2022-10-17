@@ -93,17 +93,17 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
   // final TextEditingController _relatorioEstadoController =
   //     TextEditingController();
 
-  final TextEditingController _relatorioObservacaoController =
-      TextEditingController();
+  // final TextEditingController _relatorioObservacaoController =
+  //     TextEditingController();
 
   // final TextEditingController _relatorioFotoController =
   //     TextEditingController();
 
-  final TextEditingController _relatorioComentarioClienteController =
-      TextEditingController();
+  // final TextEditingController _relatorioComentarioClienteController =
+  //     TextEditingController();
 
-  final TextEditingController _relatorioOutrosController =
-      TextEditingController();
+  // final TextEditingController _relatorioOutrosController =
+  //     TextEditingController();
 
   // final TextEditingController _relatorioTipoServicoController =
   //     TextEditingController();
@@ -123,11 +123,11 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
       final relatorioSetorClicente = _relatorioSetorClicenteController.text;
       // final relatorioEstado =
       // bool.fromEnvironment(_relatorioEstadoController.text);
-      final relatorioObservacao = _relatorioObservacaoController.text;
+      // final relatorioObservacao = _relatorioObservacaoController.text;
       // final relatorioFoto = _relatorioFotoController.text;
-      final relatorioComentarioCliente =
-          _relatorioComentarioClienteController.text;
-      final relatorioOutros = _relatorioOutrosController.text;
+      // final relatorioComentarioCliente =
+      //     _relatorioComentarioClienteController.text;
+      // final relatorioOutros = _relatorioOutrosController.text;
       final relatorioTipoServico = int.tryParse(tipoServicoDropDownValue) ?? 0;
 
       dynamic _relatorioServicoRes = await api.addRelatorio(
@@ -139,9 +139,6 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
           relatorioContatoCliente,
           relatorioSetorClicente,
           _relatorioData,
-          relatorioObservacao,
-          relatorioComentarioCliente,
-          relatorioOutros,
           relatorioTipoServico);
 
       setState(() {
@@ -236,18 +233,18 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
                 controller: _relatorioSetorClicenteController,
                 decoration: const InputDecoration(labelText: 'Setor'),
               ),
-              TextField(
-                controller: _relatorioObservacaoController,
-                decoration: const InputDecoration(labelText: 'Observacao'),
-              ),
-              TextField(
-                controller: _relatorioComentarioClienteController,
-                decoration: const InputDecoration(labelText: 'Comentario'),
-              ),
-              TextField(
-                controller: _relatorioOutrosController,
-                decoration: const InputDecoration(labelText: 'Outros'),
-              ),
+              // TextField(
+              //   controller: _relatorioObservacaoController,
+              //   decoration: const InputDecoration(labelText: 'Observacao'),
+              // ),
+              // TextField(
+              //   controller: _relatorioComentarioClienteController,
+              //   decoration: const InputDecoration(labelText: 'Comentario'),
+              // ),
+              // TextField(
+              //   controller: _relatorioOutrosController,
+              //   decoration: const InputDecoration(labelText: 'Outros'),
+              // ),
               // TextField(
               //   controller: _relatorioTipoServicoController,
               //   decoration: const InputDecoration(labelText: 'Tipo Servico'),
