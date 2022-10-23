@@ -49,8 +49,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_native_splash:
-  image: assets/images/waiting.png
-  color: "#42a5f5"
+  image: assets/images/logo_00.png
+  color: "#152039"
   android_12:
     # The image parameter sets the splash screen icon image.  If this parameter is not specified,
     # the app's launcher icon will be used instead.
@@ -59,10 +59,10 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    image: assets/images/waiting.png
+    image: assets/images/logo_00.png
 
     # Splash screen background color.
-    color: "#42a5f5"
+    color: "#152039"
 
     # App icon background color.
     #icon_background_color: "#111111"
@@ -83,6 +83,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/waiting.png
+    - assets/images/logo_00.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -30,8 +30,22 @@ class MyApp extends StatelessWidget {
       },
       title: 'Easy Report',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
-            .copyWith(secondary: Colors.amber),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: const MaterialColor(
+            0xFF152039,
+            {
+              50: Color(0xFF152039),
+              100: Color(0xFF152039),
+              200: Color(0xFF152039),
+              300: Color(0xFF152039),
+              500: Color(0xFF152039),
+              600: Color(0xFF152039),
+              700: Color(0xFF152039),
+              800: Color(0xFF152039),
+              900: Color(0xFF152039),
+            },
+          ),
+        ).copyWith(secondary: Colors.amber),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: const TextStyle(
@@ -135,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.purple,
+            selectedItemColor: Color(0xFF152039),
             onTap: _onItemTapped,
           ),
           body: _telas[_selectedIndex]),

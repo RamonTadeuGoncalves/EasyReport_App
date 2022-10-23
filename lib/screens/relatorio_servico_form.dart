@@ -70,14 +70,8 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
   final TextEditingController _relatorioNumeroController =
       TextEditingController();
 
-  // final TextEditingController _relatorioOsNumeroController =
-  //     TextEditingController();
-
   final TextEditingController _relatorioFuncRegistroController =
       TextEditingController();
-
-  // final TextEditingController _relatorioClienteRegistroController =
-  //     TextEditingController();
 
   final TextEditingController _relatorioDescricaoController =
       TextEditingController();
@@ -89,25 +83,6 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
       TextEditingController();
 
   final TextEditingController relatorioData = TextEditingController();
-
-  // final TextEditingController _relatorioEstadoController =
-  //     TextEditingController();
-
-  // final TextEditingController _relatorioObservacaoController =
-  //     TextEditingController();
-
-  // final TextEditingController _relatorioFotoController =
-  //     TextEditingController();
-
-  // final TextEditingController _relatorioComentarioClienteController =
-  //     TextEditingController();
-
-  // final TextEditingController _relatorioOutrosController =
-  //     TextEditingController();
-
-  // final TextEditingController _relatorioTipoServicoController =
-  //     TextEditingController();
-
   DateTime _relatorioData = DateTime.now();
 
   Future<void> _submitForm() async {
@@ -121,13 +96,6 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
       final relatorioDescricao = _relatorioDescricaoController.text;
       final relatorioContatoCliente = _relatorioContatoClienteController.text;
       final relatorioSetorClicente = _relatorioSetorClicenteController.text;
-      // final relatorioEstado =
-      // bool.fromEnvironment(_relatorioEstadoController.text);
-      // final relatorioObservacao = _relatorioObservacaoController.text;
-      // final relatorioFoto = _relatorioFotoController.text;
-      // final relatorioComentarioCliente =
-      //     _relatorioComentarioClienteController.text;
-      // final relatorioOutros = _relatorioOutrosController.text;
       final relatorioTipoServico = int.tryParse(tipoServicoDropDownValue) ?? 0;
 
       dynamic _relatorioServicoRes = await api.addRelatorio(
@@ -172,14 +140,16 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(children: [
-              // TextField(
-              //   controller: _relatorioNumeroController,
-              //   decoration: const InputDecoration(labelText: 'Relatorio Numero'),
-              // ),
-              // DropDownButtonOsNumero(),
               DropdownButtonFormField(
-                decoration:
-                    const InputDecoration(labelText: 'Ordem de Servico'),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Selecione o úmero da O.S.';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                    labelText: 'Ordem de Servico',
+                    hintText: 'Selecione o úmero da O.S.'),
                 items: serviceOrdersItemList.map((item) {
                   return DropdownMenuItem(
                     value: item['osNumero'].toString(),
@@ -193,21 +163,29 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
                 },
                 value: serviceOrderDropDownValue,
               ),
-              // TextField(
-              //   controller: _relatorioOsNumeroController,
-              //   decoration:
-              //       const InputDecoration(labelText: 'Ordem de Servico'),
-              // ),
-              TextField(
+              TextFormField(
                 controller: _relatorioFuncRegistroController,
-                decoration: const InputDecoration(labelText: 'Funcionario'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Informe o seu registro';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    labelText: 'Funcionario',
+                    hintText: 'Informe o número do seu registro'),
               ),
-              // TextField(
-              //   controller: _relatorioClienteRegistroController,
-              //   decoration: const InputDecoration(labelText: 'Cliente'),
-              // ),
               DropdownButtonFormField(
-                decoration: const InputDecoration(labelText: 'Cliente'),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Selecione o nome do cliente';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                    labelText: 'Cliente',
+                    hintText: 'Selecione o nome do cliente'),
                 items: clientesItemList.map((item) {
                   return DropdownMenuItem(
                     value: item['clienteRegistro'].toString(),
@@ -221,36 +199,54 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
                 },
                 value: clienteDropDownValue,
               ),
-              TextField(
+              TextFormField(
                 controller: _relatorioDescricaoController,
-                decoration: const InputDecoration(labelText: 'Descricao'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Informe a descrição do serviço';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                    labelText: 'Descricao', hintText: 'Informe uma descrição'),
               ),
-              TextField(
+              TextFormField(
                 controller: _relatorioContatoClienteController,
-                decoration: const InputDecoration(labelText: 'Contato'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Informe um nome de contato';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                    labelText: 'Contato',
+                    hintText: 'Informe um nome de contato do cliente'),
               ),
-              TextField(
+              TextFormField(
                 controller: _relatorioSetorClicenteController,
-                decoration: const InputDecoration(labelText: 'Setor'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Informe o nome do setor';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                    labelText: 'Setor',
+                    hintText: 'Informe o setor onde o serviço foi realizado'),
               ),
-              // TextField(
-              //   controller: _relatorioObservacaoController,
-              //   decoration: const InputDecoration(labelText: 'Observacao'),
-              // ),
-              // TextField(
-              //   controller: _relatorioComentarioClienteController,
-              //   decoration: const InputDecoration(labelText: 'Comentario'),
-              // ),
-              // TextField(
-              //   controller: _relatorioOutrosController,
-              //   decoration: const InputDecoration(labelText: 'Outros'),
-              // ),
-              // TextField(
-              //   controller: _relatorioTipoServicoController,
-              //   decoration: const InputDecoration(labelText: 'Tipo Servico'),
-              // ),
               DropdownButtonFormField(
-                decoration: const InputDecoration(labelText: 'Tipo Servico'),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Selecione o tipo de serviço';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                    labelText: 'Tipo Servico',
+                    hintText: 'Selecione o tipo de serviço que foi realizado'),
                 items: tipoServicoItemList.map((item) {
                   return DropdownMenuItem(
                     value: item['servRegistro'].toString(),

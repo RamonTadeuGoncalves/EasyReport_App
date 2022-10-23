@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
             },
             keyboardType: TextInputType.text,
             decoration: const InputDecoration(
-                labelText: 'Usuario', hintText: 'Informe o nome de usuario'),
+                labelText: 'Usuario', hintText: 'Informe o e-mail'),
           ),
           TextFormField(
             controller: _usuarioPasswordController,
