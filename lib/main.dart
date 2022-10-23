@@ -122,7 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            title: SizedBox(
+              width: 80,
+              child: Image.asset('assets/images/logo_00.png'),
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.exit_to_app),

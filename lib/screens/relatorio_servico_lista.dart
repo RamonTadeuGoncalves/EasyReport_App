@@ -89,12 +89,13 @@ class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
               leading: CircleAvatar(
                 radius: 28,
                 backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Text('${relatorioDeServico.relatorioNumero.toString()}'),
               ),
               title: Text(
                   'Relatorio De Servico: ${relatorioDeServico.relatorioNumero.toString()}'),
               subtitle: Text(DateFormat('dd/MM/y')
                   .format(relatorioDeServico.relatorioData)),
-              trailing: const Icon(Icons.arrow_forward),
+              trailing: const Icon(Icons.receipt_long_rounded),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

@@ -87,12 +87,13 @@ class _ServiceListState extends State<ServiceList> {
               leading: CircleAvatar(
                 radius: 28,
                 backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Text('${serviceOrder.osNumero.toString()}'),
               ),
               title:
                   Text('Ordem de Servico: ${serviceOrder.osNumero.toString()}'),
               subtitle: Text(
                   DateFormat('dd/MM/y').format(serviceOrder.osDataAbertura)),
-              trailing: const Icon(Icons.arrow_forward),
+              trailing: const Icon(Icons.description_outlined),
               onTap: () {
                 // Navigator.pushNamed(context, '/report');
                 Navigator.of(context).push(
