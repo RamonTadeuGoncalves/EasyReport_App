@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
           padding: const EdgeInsets.all(16),
           child: (_usuario == null) ? body(context) : body(context)),
@@ -64,49 +65,109 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   body(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          TextFormField(
-            controller: _usuarioUsernameController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Informe o Login';
-              }
-              return null;
-            },
-            keyboardType: TextInputType.text,
-            decoration: const InputDecoration(
-                labelText: 'Usuario', hintText: 'Informe o e-mail'),
-          ),
-          TextFormField(
-            controller: _usuarioPasswordController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Informe a Senha';
-              }
-              return null;
-            },
-            obscureText: true,
-            decoration: const InputDecoration(
-                labelText: 'Senha', hintText: 'Informe a senha'),
-          ),
-          containerButton(context)
-        ],
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 75, bottom: 100),
+              child: Center(
+                child: SizedBox(
+                  width: 250,
+                  height: 200,
+                  child: Image.asset('assets/images/logo_00.png'),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 0, bottom: 0),
+                child: TextFormField(
+                  controller: _usuarioUsernameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe o Login';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      fillColor: Colors.amber,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      labelText: 'Usuario',
+                      hintText: 'Informe o e-mail'),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+              decoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.only(
+                  //   bottomLeft: Radius.circular(15),
+                  //   bottomRight: Radius.circular(15),
+                  // ),
+                  color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 15.0, bottom: 0),
+                child: TextFormField(
+                  controller: _usuarioPasswordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe a Senha';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      labelText: 'Senha',
+                      hintText: 'Informe a senha'),
+                ),
+              ),
+            ),
+            Container(
+              width: 375,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Colors.white),
+              child: containerButton(context),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   containerButton(BuildContext context) {
-    return Container(
-      height: 40,
-      margin: const EdgeInsets.only(top: 10),
-      child: ElevatedButton(
-        // onPressed: _submitForm,
-        onPressed: _login,
-        child: const Text('Entrar'),
-      ),
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 50.0, right: 50.0, top: 15.0, bottom: 0),
+      child: Container(
+          height: 40,
+          margin: const EdgeInsets.only(top: 10),
+          child: ElevatedButton(
+            // onPressed: _submitForm,
+            onPressed: _login,
+            child: const Text('Entrar'),
+          )),
     );
   }
 }
