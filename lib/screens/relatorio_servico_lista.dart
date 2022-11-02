@@ -92,7 +92,7 @@ class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
                 child: Text('${relatorioDeServico.relatorioNumero.toString()}'),
               ),
               title: Text(
-                  'Relatorio De Servico: ${relatorioDeServico.relatorioNumero.toString()}'),
+                  'Relatório de Serviço: ${relatorioDeServico.relatorioNumero.toString()}'),
               subtitle: Text(DateFormat('dd/MM/y')
                   .format(relatorioDeServico.relatorioData)),
               trailing: const Icon(Icons.receipt_long_rounded),

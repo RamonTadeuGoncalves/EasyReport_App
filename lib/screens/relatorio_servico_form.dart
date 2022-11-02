@@ -134,169 +134,194 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Cadastrar Relatorio'),
+          title: const Text('Cadastrar Relatório de Serviço'),
         ),
         body: Form(
           key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(children: [
-              DropdownButtonFormField(
-                validator: (value) {
-                  if (value == null) {
-                    return 'Selecione o úmero da O.S.';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    labelText: 'Ordem de Servico',
-                    hintText: 'Selecione o úmero da O.S.'),
-                items: serviceOrdersItemList.map((item) {
-                  return DropdownMenuItem(
-                    value: item['osNumero'].toString(),
-                    child: Text(item['osNumero'].toString()),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  setState(() {
-                    serviceOrderDropDownValue = newVal;
-                  });
-                },
-                value: serviceOrderDropDownValue,
-              ),
-              TextFormField(
-                controller: _relatorioFuncRegistroController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe o seu registro';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                    labelText: 'Funcionario',
-                    hintText: 'Informe o número do seu registro'),
-              ),
-              DropdownButtonFormField(
-                validator: (value) {
-                  if (value == null) {
-                    return 'Selecione o nome do cliente';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    labelText: 'Cliente',
-                    hintText: 'Selecione o nome do cliente'),
-                items: clientesItemList.map((item) {
-                  return DropdownMenuItem(
-                    value: item['clienteRegistro'].toString(),
-                    child: Text(item['clienteNome'].toString()),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  setState(() {
-                    clienteDropDownValue = newVal;
-                  });
-                },
-                value: clienteDropDownValue,
-              ),
-              TextFormField(
-                controller: _relatorioDescricaoController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe a descrição do serviço';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                    labelText: 'Descricao', hintText: 'Informe uma descrição'),
-              ),
-              TextFormField(
-                controller: _relatorioContatoClienteController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe um nome de contato';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                    labelText: 'Contato',
-                    hintText: 'Informe um nome de contato do cliente'),
-              ),
-              TextFormField(
-                controller: _relatorioSetorClicenteController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe o nome do setor';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                    labelText: 'Setor',
-                    hintText: 'Informe o setor onde o serviço foi realizado'),
-              ),
-              DropdownButtonFormField(
-                validator: (value) {
-                  if (value == null) {
-                    return 'Selecione o tipo de serviço';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    labelText: 'Tipo Servico',
-                    hintText: 'Selecione o tipo de serviço que foi realizado'),
-                items: tipoServicoItemList.map((item) {
-                  return DropdownMenuItem(
-                    value: item['servRegistro'].toString(),
-                    child: Text(item['servDescricao'].toString()),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  setState(() {
-                    tipoServicoDropDownValue = newVal;
-                  });
-                },
-                value: tipoServicoDropDownValue,
-              ),
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _relatorioData == null
-                            ? 'Nenhuma data selecionada!'
-                            : 'Data selecionada: ${DateFormat('dd/MM/y').format(_relatorioData)}',
-                      ),
-                    ),
-                    TextButton(
-                      child: const Text(
-                        'Selecionar data',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+          child: Container(
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Container(
+                  padding: const EdgeInsets.only(right: 130, bottom: 8),
+                  child: DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Selecione o úmero da O.S.';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Ordem de Servico',
+                        hintText: 'Número da O.S.'),
+                    items: serviceOrdersItemList.map((item) {
+                      return DropdownMenuItem(
+                        value: item['osNumero'].toString(),
+                        child: Text(item['osNumero'].toString()),
+                      );
+                    }).toList(),
+                    onChanged: (newVal) {
+                      setState(() {
+                        serviceOrderDropDownValue = newVal;
+                      });
+                    },
+                    value: serviceOrderDropDownValue,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(right: 130, bottom: 8),
+                  child: TextFormField(
+                    controller: _relatorioFuncRegistroController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Informe o seu registro';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        labelText: 'Funcionario',
+                        hintText: 'N. do seu registro'),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(right: 130, bottom: 8),
+                  child: DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Selecione o nome do cliente';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Cliente', hintText: 'Nome do cliente'),
+                    items: clientesItemList.map((item) {
+                      return DropdownMenuItem(
+                        value: item['clienteRegistro'].toString(),
+                        child: Text(item['clienteNome'].toString()),
+                      );
+                    }).toList(),
+                    onChanged: (newVal) {
+                      setState(() {
+                        clienteDropDownValue = newVal;
+                      });
+                    },
+                    value: clienteDropDownValue,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TextFormField(
+                    controller: _relatorioSetorClicenteController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Informe o nome do setor';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                        labelText: 'Setor',
+                        hintText: 'Setor onde o serviço foi realizado'),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TextFormField(
+                    controller: _relatorioContatoClienteController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Informe um nome de contato';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                        labelText: 'Contato',
+                        hintText: 'Informe um nome de contato do cliente'),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(right: 130, bottom: 8),
+                  child: DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Selecione o tipo de serviço';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Tipo Servico',
+                        hintText: 'Tipo de serviço realizado'),
+                    items: tipoServicoItemList.map((item) {
+                      return DropdownMenuItem(
+                        value: item['servRegistro'].toString(),
+                        child: Text(item['servDescricao'].toString()),
+                      );
+                    }).toList(),
+                    onChanged: (newVal) {
+                      setState(() {
+                        tipoServicoDropDownValue = newVal;
+                      });
+                    },
+                    value: tipoServicoDropDownValue,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: TextFormField(
+                    controller: _relatorioDescricaoController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Informe a descrição do serviço';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                        labelText: 'Descricao',
+                        hintText: 'Informe uma descrição'),
+                  ),
+                ),
+                SizedBox(
+                  height: 70,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _relatorioData == null
+                              ? 'Nenhuma data selecionada!'
+                              : 'Data selecionada: ${DateFormat('dd/MM/y').format(_relatorioData)}',
                         ),
                       ),
-                      onPressed: () {
-                        _showDatePicker();
-                      },
+                      TextButton(
+                        child: const Text(
+                          'Selecionar data',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {
+                          _showDatePicker();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: const Text(
+                        'Novo Relatório',
+                      ),
                     ),
                   ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: const Text(
-                      'Novo Relatório',
-                    ),
-                  ),
-                ],
-              )
-            ]),
+                )
+              ]),
+            ),
           ),
         ),
       );

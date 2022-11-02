@@ -62,18 +62,18 @@ class _ServiceListState extends State<ServiceList> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          ApiDataOrdemServico.getServiceOrders().then((value) {
-            setState(() {
-              widget.createState();
-            });
-          });
-        },
-        tooltip: 'Update',
-        child: const Icon(Icons.update),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     ApiDataOrdemServico.getServiceOrders().then((value) {
+      //       setState(() {
+      //         widget.createState();
+      //       });
+      //     });
+      //   },
+      //   tooltip: 'Update',
+      //   child: const Icon(Icons.update),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
