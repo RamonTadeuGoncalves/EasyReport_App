@@ -1,11 +1,62 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/ordem_servico.dart';
+import 'package:http/http.dart' as http;
 
-class ServiceOrderPage extends StatelessWidget {
+class ServiceOrderPage extends StatefulWidget {
   final ServiceOrder serviceOrder;
 
   const ServiceOrderPage({Key? key, required this.serviceOrder})
       : super(key: key);
+
+  @override
+  State<ServiceOrderPage> createState() => _ServiceOrderPageState();
+}
+
+class _ServiceOrderPageState extends State<ServiceOrderPage> {
+  List clientesItemList = [];
+  Future getClientes() async {
+    const url = 'http://10.0.2.2:8000/api/cliente';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        clientesItemList = jsonData;
+      });
+    }
+  }
+
+  List tipoServicoItemList = [];
+  Future getTipoServico() async {
+    const url = 'http://10.0.2.2:8000/api/tipo_servico';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        tipoServicoItemList = jsonData;
+      });
+    }
+  }
+
+  List tipoVeiculoItemList = [];
+  Future getVeiculo() async {
+    const url = 'http://10.0.2.2:8000/api/veiculo';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        tipoVeiculoItemList = jsonData;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getClientes();
+    getTipoServico();
+    getVeiculo();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -22,7 +73,7 @@ class ServiceOrderPage extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5, bottom: 20),
                   padding: const EdgeInsets.only(left: 100, right: 100),
                   child: Text(
-                    'N. ${serviceOrder.osNumero.toString()}',
+                    'N. ${widget.serviceOrder.osNumero.toString()}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 35),
@@ -55,7 +106,7 @@ class ServiceOrderPage extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          ('${(serviceOrder.osDataAbertura).day}/${(serviceOrder.osDataAbertura).month}/${(serviceOrder.osDataAbertura).year}')
+                          ('${(widget.serviceOrder.osDataAbertura).day}/${(widget.serviceOrder.osDataAbertura).month}/${(widget.serviceOrder.osDataAbertura).year}')
                               .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
@@ -70,7 +121,7 @@ class ServiceOrderPage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(right: 40, top: 10),
                         child: const Text(
-                          'Código Funcionário',
+                          'Matrícula Funcionário',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -79,7 +130,7 @@ class ServiceOrderPage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(left: 20, top: 10),
                         child: const Text(
-                          'Código Veículo',
+                          'Placa Veículo',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -100,7 +151,7 @@ class ServiceOrderPage extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (serviceOrder.osFuncRegistro).toString(),
+                          (widget.serviceOrder.osFuncRegistro).toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -118,7 +169,11 @@ class ServiceOrderPage extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (serviceOrder.osVeicRegistro).toString(),
+                          clientesItemList.isNotEmpty
+                              ? (getVeiculoPlaca(
+                                  widget.serviceOrder.osVeicRegistro,
+                                  tipoVeiculoItemList))
+                              : '',
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -132,7 +187,7 @@ class ServiceOrderPage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(right: 40, top: 10),
                         child: const Text(
-                          'Código Cliente',
+                          'Nome Cliente',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -162,7 +217,11 @@ class ServiceOrderPage extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (serviceOrder.osClienteRegistro).toString(),
+                          clientesItemList.isNotEmpty
+                              ? (getClienteNome(
+                                  widget.serviceOrder.osClienteRegistro,
+                                  clientesItemList))
+                              : '',
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -180,7 +239,11 @@ class ServiceOrderPage extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (serviceOrder.osTipoServico).toString(),
+                          clientesItemList.isNotEmpty
+                              ? (getServicoNome(
+                                  widget.serviceOrder.osTipoServico,
+                                  tipoServicoItemList))
+                              : '',
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -212,7 +275,7 @@ class ServiceOrderPage extends StatelessWidget {
                         width: 0.75,
                       )),
                   child: Text(
-                    serviceOrder.osDescricao,
+                    widget.serviceOrder.osDescricao,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       fontSize: 18,
@@ -224,4 +287,26 @@ class ServiceOrderPage extends StatelessWidget {
           ),
         ),
       );
+}
+
+String getClienteNome(int clienteRegistro, List listaCliente) {
+  var clientesItemList = listaCliente;
+
+  var result = [...clientesItemList].map((e) => {e['clienteNome'].toString()});
+  return (result.elementAt(clienteRegistro - 1)).toList().first;
+}
+
+String getServicoNome(int tipoServico, List listaServicos) {
+  var tipoServicosItemList = listaServicos;
+
+  var result =
+      [...tipoServicosItemList].map((e) => {e['servDescricao'].toString()});
+  return (result.elementAt(tipoServico - 1)).toList().first;
+}
+
+String getVeiculoPlaca(int veicRegistro, List listaVeiculos) {
+  var veiculosItemList = listaVeiculos;
+
+  var result = [...veiculosItemList].map((e) => {e['veicPlaca'].toString()});
+  return (result.elementAt(veicRegistro - 1)).toList().first;
 }

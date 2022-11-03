@@ -1,11 +1,50 @@
+import 'dart:convert';
+
 import 'package:easy_report_app/models/relatorio_servico.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class ServiceReport extends StatelessWidget {
+class ServiceReport extends StatefulWidget {
   final Relatorio relatorioDeServico;
 
   const ServiceReport({Key? key, required this.relatorioDeServico})
       : super(key: key);
+
+  @override
+  State<ServiceReport> createState() => _ServiceReportState();
+}
+
+class _ServiceReportState extends State<ServiceReport> {
+  List clientesItemList = [];
+  Future getClientes() async {
+    const url = 'http://10.0.2.2:8000/api/cliente';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        clientesItemList = jsonData;
+      });
+    }
+  }
+
+  List tipoServicoItemList = [];
+  Future getTipoServico() async {
+    const url = 'http://10.0.2.2:8000/api/tipo_servico';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        tipoServicoItemList = jsonData;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getClientes();
+    getTipoServico();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -22,7 +61,7 @@ class ServiceReport extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5, bottom: 20),
                   padding: const EdgeInsets.only(left: 100, right: 100),
                   child: Text(
-                    'N. ${relatorioDeServico.relatorioNumero.toString()}',
+                    'N. ${widget.relatorioDeServico.relatorioNumero.toString()}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 35),
@@ -55,7 +94,7 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          ('${(relatorioDeServico.relatorioData).day}/${(relatorioDeServico.relatorioData).month}/${(relatorioDeServico.relatorioData).year}')
+                          ('${(widget.relatorioDeServico.relatorioData).day}/${(widget.relatorioDeServico.relatorioData).month}/${(widget.relatorioDeServico.relatorioData).year}')
                               .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
@@ -79,7 +118,7 @@ class ServiceReport extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(left: 20, top: 10),
                         child: const Text(
-                          'Registro Funcionário',
+                          'Matrícula Funcionário',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -100,7 +139,8 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioOsNumero).toString(),
+                          (widget.relatorioDeServico.relatorioOsNumero)
+                              .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -118,7 +158,8 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioFuncRegistro).toString(),
+                          (widget.relatorioDeServico.relatorioFuncRegistro)
+                              .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -132,7 +173,7 @@ class ServiceReport extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(right: 40, top: 10),
                         child: const Text(
-                          'Código Cliente',
+                          'Nome Cliente',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -162,8 +203,12 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioClienteRegistro)
-                              .toString(),
+                          clientesItemList.isNotEmpty
+                              ? (getClienteNome(
+                                  widget.relatorioDeServico
+                                      .relatorioClienteRegistro,
+                                  clientesItemList))
+                              : '',
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -181,7 +226,7 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioSetorClicente)
+                          (widget.relatorioDeServico.relatorioSetorClicente)
                               .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
@@ -226,7 +271,7 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioContatoCliente)
+                          (widget.relatorioDeServico.relatorioContatoCliente)
                               .toString(),
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
@@ -245,7 +290,12 @@ class ServiceReport extends StatelessWidget {
                               width: 0.75,
                             )),
                         child: Text(
-                          (relatorioDeServico.relatorioTipoServico).toString(),
+                          clientesItemList.isNotEmpty
+                              ? (getServicoNome(
+                                  widget
+                                      .relatorioDeServico.relatorioTipoServico,
+                                  tipoServicoItemList))
+                              : '',
                           style: const TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -277,7 +327,7 @@ class ServiceReport extends StatelessWidget {
                         width: 0.75,
                       )),
                   child: Text(
-                    relatorioDeServico.relatorioDescricao,
+                    widget.relatorioDeServico.relatorioDescricao,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       fontSize: 18,
@@ -289,4 +339,19 @@ class ServiceReport extends StatelessWidget {
           ),
         ),
       );
+}
+
+String getClienteNome(int clienteRegistro, List listaCliente) {
+  var clientesItemList = listaCliente;
+
+  var result = [...clientesItemList].map((e) => {e['clienteNome'].toString()});
+  return (result.elementAt(clienteRegistro - 1)).toList().first;
+}
+
+String getServicoNome(int tipoServico, List listaServicos) {
+  var tipoServicosItemList = listaServicos;
+
+  var result =
+      [...tipoServicosItemList].map((e) => {e['servDescricao'].toString()});
+  return (result.elementAt(tipoServico - 1)).toList().first;
 }
