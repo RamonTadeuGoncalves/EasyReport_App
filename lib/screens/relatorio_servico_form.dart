@@ -269,8 +269,9 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   child: TextFormField(
+                    maxLength: 200,
                     controller: _relatorioDescricaoController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -282,6 +283,7 @@ class _RelatorioServicoFormState extends State<RelatorioServicoForm> {
                     decoration: const InputDecoration(
                         labelText: 'Descricao',
                         hintText: 'Informe uma descrição'),
+                    maxLines: 5,
                   ),
                 ),
                 SizedBox(

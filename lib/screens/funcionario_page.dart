@@ -1,6 +1,5 @@
 import 'package:easy_report_app/data/api_data.dart';
 import 'package:easy_report_app/models/funcionario.dart';
-import 'package:easy_report_app/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,8 +13,6 @@ class FuncionarioInfo extends StatefulWidget {
 String funcEmail = '';
 
 class _FuncionarioInfoState extends State<FuncionarioInfo> {
-  // String funcEmail = '';
-
   @override
   void initState() {
     super.initState();
@@ -60,7 +57,6 @@ class _FuncionarioInfoState extends State<FuncionarioInfo> {
                       const SizedBox(
                         height: 20,
                       ),
-                      // Text(funcEmail),
                       Text(
                         'Nenhuma Info Cadastrada :(',
                         style: Theme.of(context).textTheme.headline6,
