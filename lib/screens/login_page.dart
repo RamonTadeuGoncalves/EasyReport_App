@@ -24,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usuarioUsernameController =
       TextEditingController();
 
+  get constraints => null;
+
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       final usuarioUsername = _usuarioUsernameController.text;
@@ -48,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Usuario e/ou senha invalidos...')));
-          body(context);
+          body(context, constraints);
         }
       });
     }
@@ -58,13 +60,20 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: (_usuario == null) ? body(context) : body(context)),
+      body: LayoutBuilder(
+        builder: (context, constrains) {
+          return Padding(
+              padding: const EdgeInsets.all(16),
+              child: (_usuario == null)
+                  ? body(context, constrains)
+                  : body(context, constrains));
+        },
+      ),
     );
   }
 
-  body(BuildContext context) {
+  body(BuildContext context, constraints) {
+    const percent = 6;
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
@@ -81,7 +90,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
+              width: constraints.maxWidth,
+              // height: constraints.maxHeight / percent,
+              padding: const EdgeInsets.fromLTRB(10, 40, 10, 30),
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
@@ -111,13 +122,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
+              width: constraints.maxWidth,
+              // height: constraints.maxHeight / percent,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-              decoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.only(
-                  //   bottomLeft: Radius.circular(15),
-                  //   bottomRight: Radius.circular(15),
-                  // ),
-                  color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15.0, bottom: 0),

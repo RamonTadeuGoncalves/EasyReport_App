@@ -38,50 +38,57 @@ class _FuncionarioInfoState extends State<FuncionarioInfo> {
 
   @override
   Widget build(BuildContext context) {
+    const percent = 3;
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<List<Funcionarios>>(
-          future: loadDataFromApi(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Erro ao carregar ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final funcionarios = snapshot.data!;
-              if (funcionarios.isEmpty) {
-                return SizedBox(
-                  height: 500,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            widthFactor: constraints.maxWidth,
+            heightFactor: constraints.maxHeight / percent,
+            child: FutureBuilder<List<Funcionarios>>(
+              future: loadDataFromApi(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao carregar ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  final funcionarios = snapshot.data!;
+                  if (funcionarios.isEmpty) {
+                    return SizedBox(
+                      height: 500,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Nenhuma Info Cadastrada :(',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 200,
+                            child: Image.asset(
+                              'assets/images/waiting.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Nenhuma Info Cadastrada :(',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: Image.asset(
-                          'assets/images/waiting.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return buildFuncionarios(funcionarios);
-              }
-            } else {
-              return const Text('Nenhuma Info Cadastrada 2 :(');
-            }
-          },
-        ),
+                    );
+                  } else {
+                    return buildFuncionarios(funcionarios);
+                  }
+                } else {
+                  return const Text('Nenhuma Info Cadastrada 2 :(');
+                }
+              },
+            ),
+          );
+        },
       ),
     );
   }

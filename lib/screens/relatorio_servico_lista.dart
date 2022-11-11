@@ -21,50 +21,57 @@ class _RelatorioDeServicoListaState extends State<RelatorioDeServicoLista> {
 
   @override
   Widget build(BuildContext context) {
+    const percent = 3;
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<List<Relatorio>>(
-          future: relatorioDeServicoFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Erro ao carregar ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final relatoriosDeServico = snapshot.data!;
-              if (relatoriosDeServico.isEmpty) {
-                return SizedBox(
-                  height: 500,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            widthFactor: constraints.maxHeight,
+            heightFactor: constraints.maxHeight / percent,
+            child: FutureBuilder<List<Relatorio>>(
+              future: relatorioDeServicoFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao carregar ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  final relatoriosDeServico = snapshot.data!;
+                  if (relatoriosDeServico.isEmpty) {
+                    return SizedBox(
+                      height: 500,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Nenhum Relatorio Cadastrado :(',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 200,
+                            child: Image.asset(
+                              'assets/images/waiting.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Nenhum Relatorio Cadastrado :(',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: Image.asset(
-                          'assets/images/waiting.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return buildRelatoriosDeServico(relatoriosDeServico);
-              }
-            } else {
-              return const Text('Nenhuma Ordem de Servico Recebida :(');
-            }
-          },
-        ),
+                    );
+                  } else {
+                    return buildRelatoriosDeServico(relatoriosDeServico);
+                  }
+                } else {
+                  return const Text('Nenhuma Ordem de Servico Recebida :(');
+                }
+              },
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),

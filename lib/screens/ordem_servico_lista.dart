@@ -20,50 +20,57 @@ class _ServiceListState extends State<ServiceList> {
 
   @override
   Widget build(BuildContext context) {
+    const percent = 3;
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<List<ServiceOrder>>(
-          future: serviceOrdersFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Erro ao carregar ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final serviceOrders = snapshot.data!;
-              if (serviceOrders.isEmpty) {
-                return SizedBox(
-                  height: 500,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            widthFactor: constraints.maxWidth,
+            heightFactor: constraints.maxHeight / percent,
+            child: FutureBuilder<List<ServiceOrder>>(
+              future: serviceOrdersFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao carregar ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  final serviceOrders = snapshot.data!;
+                  if (serviceOrders.isEmpty) {
+                    return SizedBox(
+                      height: 500,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Nenhuma Ordem de Servico Recebida :(',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 200,
+                            child: Image.asset(
+                              'assets/images/waiting.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Nenhuma Ordem de Servico Recebida :(',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: Image.asset(
-                          'assets/images/waiting.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return buildServiceOrders(serviceOrders);
-              }
-            } else {
-              return const Text('Nenhuma Ordem de Servico Recebida :(');
-            }
-          },
-        ),
+                    );
+                  } else {
+                    return buildServiceOrders(serviceOrders);
+                  }
+                } else {
+                  return const Text('Nenhuma Ordem de Servico Recebida :(');
+                }
+              },
+            ),
+          );
+        },
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () async {
