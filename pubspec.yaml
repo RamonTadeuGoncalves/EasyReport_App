@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   flutter_native_splash: ^2.2.9
+  flutter_launcher_icons: ^0.11.0
   http: ^0.13.5
   shared_preferences: any
   shimmer: ^2.0.0
@@ -50,29 +51,36 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_native_splash:
-  image: assets/images/logo_00.png
+  image: "assets/images/logo_00.png"
   color: "#152039"
-  android_12:
-    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
-    # the app's launcher icon will be used instead.
-    # Please note that the splash screen will be clipped to a circle on the center of the screen.
-    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
-    # 640 pixels in diameter.
-    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
-    # 768 pixels in diameter.
-    image: assets/images/logo_00.png
+  android: true
+  # android_12:
+  # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+  # the app's launcher icon will be used instead.
+  # Please note that the splash screen will be clipped to a circle on the center of the screen.
+  # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+  # 640 pixels in diameter.
+  # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+  # 768 pixels in diameter.
+  # image: assets/images/logo_00.png
 
-    # Splash screen background color.
-    color: "#152039"
+  # Splash screen background color.
+  # color: "#152039"
 
-    # App icon background color.
-    #icon_background_color: "#111111"
+  # App icon background color.
+  #icon_background_color: "#111111"
 
-    # The branding property allows you to specify an image used as branding in the splash screen.
-    #branding: assets/dart.png
+  # The branding property allows you to specify an image used as branding in the splash screen.
+  #branding: assets/dart.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: "launcher_icons"
+  adaptative_icon_background: "#FFFFFF"
+  adaptative_icon_foreground: "assets/images/icon_android.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -85,6 +93,8 @@ flutter:
   assets:
     - assets/images/waiting.png
     - assets/images/logo_00.png
+    - assets/images/icon.png
+    - assets/images/icon_android.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
