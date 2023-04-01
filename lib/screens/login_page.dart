@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Usuario e/ou senha invalidos...')));
+              const SnackBar(content: Text('Usuário e/ou senha inválidos...')));
           body(context, constraints);
         }
       });
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(90.0),
                       ),
-                      labelText: 'Usuario',
+                      labelText: 'Usuário',
                       hintText: 'Informe o e-mail'),
                 ),
               ),
@@ -190,8 +190,8 @@ Widget buildUsuarios(List<Usuarios> usuarios) => ListView.builder(
               radius: 28,
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
-            title: Text('Usuario ID: ${usuario.username}'),
-            subtitle: Text('Usuario Senha: ${usuario.password}'),
+            title: Text('Usuário ID: ${usuario.username}'),
+            subtitle: Text('Usuário Senha: ${usuario.password}'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               // Navigator.pushNamed(context, '/report');

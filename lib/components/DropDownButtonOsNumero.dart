@@ -12,7 +12,7 @@ class DropDownButtonOsNumero extends StatefulWidget {
 class _DropDownButtonOsNumeroState extends State<DropDownButtonOsNumero> {
   List categoryItemList = [];
   Future getServiceOrders() async {
-    const url = 'http://www.relatoriofacil.kinghost.net/api/ordem_servico';
+    const url = 'http://10.0.2.2:8000/api/ordem_servico';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);

@@ -17,8 +17,7 @@ class ServiceOrderPage extends StatefulWidget {
 class _ServiceOrderPageState extends State<ServiceOrderPage> {
   List clientesItemList = [];
   Future getClientes() async {
-    const url =
-        'http://www.relatoriofacil.kinghost.net/relatorio_facil/api/cliente';
+    const url = 'http://10.0.2.2:8000/api/cliente';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -30,8 +29,7 @@ class _ServiceOrderPageState extends State<ServiceOrderPage> {
 
   List tipoServicoItemList = [];
   Future getTipoServico() async {
-    const url =
-        'http://www.relatoriofacil.kinghost.net/relatorio_facil/api/tipo_servico';
+    const url = 'http://10.0.2.2:8000/api/tipo_servico';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -43,8 +41,7 @@ class _ServiceOrderPageState extends State<ServiceOrderPage> {
 
   List tipoVeiculoItemList = [];
   Future getVeiculo() async {
-    const url =
-        'http://www.relatoriofacil.kinghost.net/relatorio_facil/api/veiculo';
+    const url = 'http://10.0.2.2:8000/api/veiculo';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
